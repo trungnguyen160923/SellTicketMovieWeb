@@ -99,6 +99,10 @@ public class testController {
 		model.addAttribute("taiKhoans", list12);
 		model.addAttribute("hoaDons", list13);
 		model.addAttribute("ves", list14);
-		return "/test";
+		return "/test/test";
+	}
+	@RequestMapping("/test_index")
+	public String login(ModelMap model) {
+		return "/test/login";
 	}
 }

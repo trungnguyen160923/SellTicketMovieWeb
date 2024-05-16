@@ -29,7 +29,7 @@ public class Phong {
 	private Collection<Ghe> ghes;
 	
 	@OneToMany(mappedBy = "phong", fetch = FetchType.EAGER)
-	private Collection<CaChieu> caChieu;
+	private Collection<CaChieu> caChieus;
 
     public Phong() {
     }
@@ -88,12 +88,12 @@ public class Phong {
         this.ghes = ghes;
     }
     
-    public void setCaChieus(Collection<CaChieu> caChieu) {
-    	this.caChieu = caChieu;
+    public void setCaChieus(Collection<CaChieu> caChieus) {
+    	this.caChieus = caChieus;
     }
     
     public Collection<CaChieu> getCaChieus() {
-    	return this.caChieu;
+    	return this.caChieus;
     }
     
 }
