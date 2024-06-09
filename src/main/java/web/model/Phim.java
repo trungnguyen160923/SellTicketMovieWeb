@@ -4,10 +4,14 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.datatype.jsr310.*;
+
 @Entity
 @Table(name="PHIM")
 public class Phim {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="MAPHIM")
 	private int maPhim;
 	
@@ -44,14 +48,18 @@ public class Phim {
 	@Column(name="ANHBIA")
     private String anhBia;
 	
-	@Column(name="NGAYHIEULUCTU")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngayHieuLucTu;
-	
-	@Column(name="NGAYHIEULUCDEN")
+
+	@Temporal(TemporalType.DATE)
+//	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+//	@Column(name="NGAYHIEULUCDEN")
     private Date ngayHieuLucDen;
 	
 	@OneToMany(mappedBy = "phim", fetch = FetchType.EAGER)
-	private Collection<CaChieu> caChieu;
+	private Collection<CaChieu> caChieus;
 	
 	@OneToMany(mappedBy = "phim", fetch = FetchType.EAGER)
 	private Collection<Phim_TheLoai> phim_TheLoais;
@@ -205,5 +213,13 @@ public class Phim {
     
     public void setThamGias(Collection<ThamGia >thamGias) {
     	this.thamGias = thamGias;
+    }
+    
+    public Collection<CaChieu> getCaChieus(){
+    	return this.caChieus;
+    }
+    
+    public void setCaChieus(Collection<CaChieu>caChieus) {
+    	this.caChieus = caChieus;
     }
 }

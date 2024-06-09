@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Table(name = "GHE")
 public class Ghe {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="MAGHE")
 	private int maGhe;
 	
@@ -29,7 +30,7 @@ public class Ghe {
 	private Phong phong;
 	
 	@OneToMany(mappedBy = "ghe", fetch = FetchType.EAGER)
-	private Collection<Ve> ves;
+	private Collection<HoaDon> hoaDons;
 
     public Ghe() {
     }
@@ -89,11 +90,11 @@ public class Ghe {
         this.phong = phong;
     }
     
-    public Collection<Ve> getVes() {
-        return this.ves;
+    public Collection<HoaDon> getHoaDons() {
+        return this.hoaDons;
     }
 
-    public void setVes(Collection<Ve> ves) {
-        this.ves = ves;
+    public void setHoaDons(Collection<HoaDon> hoaDons) {
+        this.hoaDons = hoaDons;
     }
 }

@@ -27,8 +27,13 @@ public class HoaDon {
 	@Column(name="TRANGTHAI")
     private boolean trangThai;
 	
-	@OneToMany(mappedBy = "hoaDon", fetch = FetchType.EAGER)
-	private Collection<Ve> ves;
+	@ManyToOne
+	@JoinColumn(name="maGhe")
+    private Ghe ghe;
+	
+	@ManyToOne
+	@JoinColumn(name="maVe")
+    private Ve ve;
 
     public HoaDon() {
     }
@@ -61,9 +66,18 @@ public class HoaDon {
     public int getSoLuong() {
         return soLuong;
     }
+    
 
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
+    }
+    
+    public Ghe getGhe() {
+        return ghe;
+    }
+
+    public void setGhe(Ghe ghe) {
+        this.ghe = ghe;
     }
 
     public double getTongGia() {
@@ -90,11 +104,13 @@ public class HoaDon {
         this.trangThai = trangThai;
     }
     
-    public Collection<Ve> getVes() {
-        return this.ves;
+    public Ve getVe() {
+        return ve;
     }
 
-    public void setVes(Collection<Ve> ves) {
-        this.ves = ves;
+    public void setVe(Ve ve) {
+        this.ve = ve;
     }
+    
+    
 }

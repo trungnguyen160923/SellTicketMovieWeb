@@ -1,5 +1,7 @@
 package web.model;
 
+import java.util.Collection;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,26 +15,24 @@ public class Ve {
 	@JoinColumn(name="maCaChieu")
     private CaChieu caChieu;
 	
-	@ManyToOne
-	@JoinColumn(name="maGhe")
-    private Ghe ghe;
 	
 	@Column(name="GIAVE")
     private double giaVe;
 	
 	@ManyToOne
-	@JoinColumn(name="maHoaDon")
-    private HoaDon hoaDon;
+	@JoinColumn(name="maLoaiGhe")
+    private LoaiGhe loaiGhe;
+	
+	@OneToMany(mappedBy = "ve", fetch = FetchType.EAGER)
+	private Collection<HoaDon> hoaDons;
 
     public Ve() {
     }
 
-    public Ve(int maVe, CaChieu caChieu, Ghe ghe, double giaVe, HoaDon hoaDon) {
+    public Ve(int maVe, CaChieu caChieu, double giaVe) {
         this.maVe = maVe;
         this.caChieu = caChieu;
-        this.ghe = ghe;
         this.giaVe = giaVe;
-        this.hoaDon = hoaDon;
     }
 
     public int getMaVe() {
@@ -51,13 +51,7 @@ public class Ve {
         this.caChieu = caChieu;
     }
 
-    public Ghe getGhe() {
-        return ghe;
-    }
-
-    public void setGhe(Ghe ghe) {
-        this.ghe = ghe;
-    }
+    
 
     public double getGiaVe() {
         return giaVe;
@@ -66,12 +60,21 @@ public class Ve {
     public void setGiaVe(double giaVe) {
         this.giaVe = giaVe;
     }
-
-    public HoaDon getHoaDon() {
-        return hoaDon;
+    
+    public LoaiGhe getLoaiGhe() {
+        return loaiGhe;
     }
 
-    public void setHoaDon(HoaDon hoaDon) {
-        this.hoaDon = hoaDon;
+    public void setLoaiGhe(LoaiGhe loaiGhe) {
+        this.loaiGhe = loaiGhe;
+    }
+
+    
+    public Collection<HoaDon> getHoaDons() {
+        return this.hoaDons;
+    }
+
+    public void setHoaDons(Collection<HoaDon> hoaDons) {
+        this.hoaDons = hoaDons;
     }
 }
