@@ -20,25 +20,21 @@
 			p:driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 			p:url="jdbc:sqlserver://localhost:1433;database=TicketCinema;encrypt=true;trustServerCertificate=true;"
 			p:username="sa"
-			p:password="123456">
+			p:password="sa">
 	</bean>
 	
 	<!-- Cấu hình Hibernate -->
-	<bean id="sessionFactory" 
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-	    <property name="dataSource" ref="dataSource"/>
-	    <property name="hibernateProperties">
-	      <props>        
-	            <prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>          
-	            <prop key="hibernate.show_sql">false</prop>
-	       </props>
-	    </property>
-		<property name="packagesToScan" value="web.model"/>
-	</bean>
-	
+<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+<property name="dataSource" ref="dataSource"/>
+<property name="hibernateProperties">
+<props>
+<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+<prop key="hibernate.show_sql">false</prop>
+</props>
+</property>
+<property name="packagesToScan" value="web.model"/>
+</bean>
 	<!-- Transaction Manager -->
-    <bean id="transactionManager" 
-    		class="org.springframework.orm.hibernate4.HibernateTransactionManager" 
-       		p:sessionFactory-ref="sessionFactory" />
-    <tx:annotation-driven transaction-manager="transactionManager" />
+<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager" p:sessionFactory-ref="sessionFactory"/>
+<tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>

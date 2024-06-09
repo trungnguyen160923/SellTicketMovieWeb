@@ -4,10 +4,13 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name="TAIKHOAN")
 public class TaiKhoan {
 	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="MATAIKHOAN")
 	private int maTaiKhoan;
 	
@@ -20,7 +23,8 @@ public class TaiKhoan {
 	@Column(name="EMAIL")
     private String email;
 	
-	@Column(name="NGAYSINH")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date ngaySinh;
 	
 	@Column(name="DIACHI")
