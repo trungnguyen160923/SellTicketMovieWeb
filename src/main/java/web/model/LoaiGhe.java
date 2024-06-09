@@ -15,6 +15,9 @@ public class LoaiGhe {
 	@Column(name="TENLOAIGHE")
     private String tenLoaiGhe;
 	
+	@Column(name="GIAGHE")
+    private double giaGhe;
+	
 	@Column(name="TRANGTHAI")
     private boolean trangThai;
 
@@ -27,10 +30,11 @@ public class LoaiGhe {
     public LoaiGhe() {
     }
 
-    public LoaiGhe(int maLoaiGhe, String tenLoaiGhe, boolean trangThai) {
+    public LoaiGhe(int maLoaiGhe, String tenLoaiGhe, boolean trangThai, float giaGhe) {
         this.maLoaiGhe = maLoaiGhe;
         this.tenLoaiGhe = tenLoaiGhe;
         this.trangThai = trangThai;
+        this.giaGhe = giaGhe;
     }
 
     public int getMaLoaiGhe() {
@@ -47,6 +51,14 @@ public class LoaiGhe {
 
     public void setTenLoaiGhe(String tenLoaiGhe) {
         this.tenLoaiGhe = tenLoaiGhe;
+    }
+    
+    public double getGiaGhe() {
+        return giaGhe;
+    }
+
+    public void setGiaGhe(double giaGhe) {
+        this.giaGhe = giaGhe;
     }
 
     public boolean isTrangThai() {
