@@ -45,7 +45,7 @@ public class loginController {
             if (user != null) {
             	 session.setAttribute("user", user); 
             	if (user.getVaiTro().getMaVaiTro() == 1) {
-            		return "redirect:/admin/home";
+            		return "redirect:/admin/index";
             	}else return "redirect:/customer/home";
             } else {
                 model.addAttribute("error", "Tên đăng nhập hoặc mật khẩu không chính xác.");

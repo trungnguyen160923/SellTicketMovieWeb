@@ -83,6 +83,49 @@ public class adminCaChieuCtrl {
 		model.addAttribute("loaiGhes", listVe);
 		model.addAttribute("caChieus", listCaChieu);
 		model.addAttribute("loaiGhes", listLoaiGhe);
+		session.close();
 		return "admin/themCaChieu";
+	}
+	
+	@RequestMapping(value="taoCaChieu", method = RequestMethod.POST)
+	public String taoCaChieu(ModelMap model,
+			@RequestParam("maPhim") Integer maPhim,
+			@RequestParam("maPhong") Integer maPhong,
+			@RequestParam("ngayChieu") Date ngayChieu,
+			@RequestParam("gioBatDau") String gioBatDau,
+			@RequestParam("gioKetThuc") String gioKetThuc) {
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		try {
+	        // Parse the time strings into Time objects
+
+	        // Create a new CaChieu object
+	        CaChieu newCaChieu = new CaChieu();
+	        
+	        Phim phim = new Phim();
+	        phim.setMaPhim(maPhim);
+	        newCaChieu.setPhim(phim);
+	        
+	        Phong phong = new Phong();
+	        phong.setMaPhong(maPhong);
+	        newCaChieu.setPhong(phong);
+	        newCaChieu.setNgayChieu(ngayChieu);
+	        newCaChieu.setGioBatDau(gioBatDau);
+	        newCaChieu.setGioKetThuc(gioKetThuc);
+
+	        // Save the new CaChieu object to the database
+	        session.save(newCaChieu);
+	        t.commit();
+//            model.addAttribute("message", "Cập nhật thành công!");
+	        // Redirect to the 'themCaChieu' page after successful creation
+	    } catch (Exception e) {
+	        t.rollback();
+//	        model.addAttribute("message", "Error creating showtime: " + e.getMessage());
+	        e.printStackTrace();
+	    } finally {
+	        session.close();
+	    }
+
+		return "redirect:/admin/themCaChieu.htm";
 	}
 }
