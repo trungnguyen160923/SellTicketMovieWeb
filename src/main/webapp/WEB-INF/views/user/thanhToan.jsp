@@ -206,16 +206,27 @@ body {
 				<div class="modal-body">
 					<!-- Đặt các thông tin chuyển khoản ở đây -->
 					<p>
+						Chủ tài khoản: <strong>Nguyễn Văn Thông</strong>
+					</p>
+					<p>
 						Số tài khoản: <strong>123456789000</strong>
 					</p>
 					<p>
-						Chủ tài khoản: <strong>Nguyễn Văn A</strong>
+						Tên ngân hàng: <strong>BIDV</strong>
 					</p>
 					<p>
-						Số tiền cần chuyển: <strong>(Check Hóa Đơn)</strong>
+						Số tiền cần chuyển: <strong>(Check Mục Thanh Toán)</strong>
 					</p>
 					<p>
 						Nội dung: <strong>Thanh toán vé xem phim + Mã Hóa Đơn</strong>
+					</p>
+					<p>
+						Chú ý: <strong>Việc xác nhận thanh toán thường mất khoảng 30s và
+							có thể lâu hơn từ 3-5'.</strong>
+					</p>
+					<p>
+						Ghi sai nội dung vui lòng liên hệ Zalo:0987654321 (A Thông) để được giải quyết kịp thời.
+					</p>
 					</p>
 				</div>
 				<div class="modal-footer">
