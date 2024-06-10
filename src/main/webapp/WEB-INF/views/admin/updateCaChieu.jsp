@@ -75,7 +75,11 @@
     </header>
     <div class="main">
         <div class="form-section row">
-            <form class="col-md-6 form_themCaChieu" method="POST" action="admin/taoCaChieu.htm" enctype="application/x-www-form-urlencoded" onsubmit="return validateSchedule()">
+            <form class="col-md-6 form_themCaChieu" method="POST" action="admin/updateCaChieu.htm" enctype="application/x-www-form-urlencoded" onsubmit="return validateSchedule()">
+                <div >
+                	<span>Mã Ca Chiếu: </span>
+					<input type="text" name="maCaChieu" value="${cc.maCaChieu}" readonly>
+				</div>
                 <!-- Chọn phim section -->
                 <div class="row mb-3">
                     <div class="col-md-6">
@@ -83,8 +87,12 @@
                         <select id="selectPhim" name="maPhim" class="form-select" >
                             <option selected value="">Chọn Phim</option>
                             <c:forEach var="p" items="${phims}">
-                            <option value="${p.maPhim}" data-thoiLuong="${p.thoiLuong}">${p.tenPhim}</option>
-                            </c:forEach>
+							    <option value="${p.maPhim}" data-thoiLuong="${p.thoiLuong}"
+							        <c:if test="${cc.phim.maPhim == p.maPhim}">
+							            selected
+							        </c:if>
+							    >${p.tenPhim}</option>
+							</c:forEach>
                         </select>
                     </div>
                     <div class="col-md-6 d-flex align-items-center">
@@ -95,12 +103,16 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="selectPhong" class="form-label">Chọn phòng: </label>
-                        <select id="selectPhong" name="maPhong" class="form-select" disabled>
-                            <option selected value="">Chọn Phòng</option>
-                            <c:forEach var="p" items="${phongs}">
-                            	<option value="${p.maPhong}">${p.tenPhong}</option>
-                            </c:forEach>
-                        </select>
+                        <select id="selectPhong" name="maPhong" class="form-select">
+						    <option selected value="">Chọn Phòng</option>
+						    <c:forEach var="p" items="${phongs}">
+						        <option value="${p.maPhong}"
+						            <c:if test="${cc.phong.maPhong == p.maPhong}">
+						                selected
+						            </c:if>
+						        >${p.tenPhong}</option>
+						    </c:forEach>
+						</select>
                     </div>
                     <div class="col-md-6 d-flex align-items-center">
                         <button class="btn btn-primary w-80 btn_disable" disabled>Xem Thông Tin Phòng</button>
@@ -108,21 +120,21 @@
                 </div>
                 <div class="mb-3">
                     <label for="chonNgayChieu" class="form-label">Chọn ngày chiếu</label>
-                    <input type="date" id="chonNgayChieu" name="ngayChieu" class="form-control" disabled>
+                    <input type="date" id="chonNgayChieu" name="ngayChieu" class="form-control" value="${cc.ngayChieu}">
                 </div>
                 <div class="mb-3">
                     <label for="gioBatDau" class="form-label">Giờ bắt đầu</label>
-                    <input type="time" id="gioBatDau" name="gioBatDau" class="form-control" disabled>
+                    <input type="time" id="gioBatDau" name="gioBatDau" class="form-control" value="${cc.gioBatDau}">
                 </div>
                 <div class="mb-3">
                     <label for="gioKetThuc" class="form-label">Giờ kết thúc</label>
-                    <input type="time" id="gioKetThuc" name="gioKetThuc" class="form-control" disabled>
+                    <input type="time" id="gioKetThuc" name="gioKetThuc" class="form-control" value="${cc.gioKetThuc}">
                 </div>
-                <button type="submit" class="btn btn-primary w-100 btn_disable" disabled >Lưu</button>
+                <button type="submit" class="btn btn-primary w-100 btn_disable" disabled>Lưu</button>
             </form>
 
             <div class="col-md-6">
-                <h5>Ca Chiếu của phòng trong ngày</h5>
+                <h5>Ca Chiếu khác của phòng trong ngày</h5>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -142,7 +154,15 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
 <script>
+		document.addEventListener('DOMContentLoaded', function() {
+		    updateCaChieu();
+		    const buttons = document.querySelectorAll('.btn_disable');
+            buttons.forEach(button => {
+                button.disabled = false;
+            });
+		});
 		// chuyển kiểu dữ liệu ca chiếu
 		var caChieus = [
 			<c:forEach items="${caChieus}" var="cc" varStatus="loop">
@@ -169,7 +189,8 @@
 
             if (ngayChieu && maPhong) {
                 const filteredCaChieus = caChieus.filter(ca => {
-                    return ca.ngayChieu == ngayChieu && ca.maPhong == maPhong;
+                	
+                    return ca.ngayChieu == ngayChieu && ca.maPhong == maPhong && ca.maCaChieu != ${cc.maCaChieu};
                 });
 
                 const tbody = document.getElementById('caChieuTableBody');
@@ -201,6 +222,18 @@
             const isPhimSelected = this.value !== "";
             
             document.getElementById('selectPhong').disabled = !isPhimSelected;
+            document.getElementById('chonNgayChieu').disabled = !isPhimSelected;
+            document.getElementById('gioBatDau').disabled = !isPhimSelected;
+            document.getElementById('gioKetThuc').disabled = !isPhimSelected;
+
+            const buttons = document.querySelectorAll('.btn_disable');
+            buttons.forEach(button => {
+                button.disabled = !isPhimSelected;
+            });
+        });
+        document.getElementById('selectPhong').addEventListener('change', function() {
+            const isPhimSelected = this.value !== "";
+            
             document.getElementById('chonNgayChieu').disabled = !isPhimSelected;
             document.getElementById('gioBatDau').disabled = !isPhimSelected;
             document.getElementById('gioKetThuc').disabled = !isPhimSelected;
@@ -246,7 +279,7 @@
                 const newEndTime = newEndHour * 60 + newEndMinute;
 
                 // Lọc các ca chiếu cùng ngày và cùng phòng
-                const filteredCaChieus = caChieus.filter(ca => ca.ngayChieu == ngayChieu && ca.maPhong == maPhong);
+                const filteredCaChieus = caChieus.filter(ca => ca.ngayChieu == ngayChieu && ca.maPhong == maPhong && ca.maCaChieu != ${cc.maCaChieu});
 
                 for (const ca of filteredCaChieus) {
                     // Chuyển đổi giờ bắt đầu và giờ kết thúc của ca chiếu hiện tại thành phút

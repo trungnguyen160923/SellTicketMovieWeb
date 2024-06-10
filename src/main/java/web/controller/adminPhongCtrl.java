@@ -439,6 +439,7 @@ public class adminPhongCtrl {
 	            session.createQuery(hqlDelete)
 	                   .setParameter("maLoaiGhe", maLoaiGhe)
 	                   .executeUpdate();
+	            
 	            t.commit();
 //				model.addAttribute("message","Chỉnh sửa thành công!");
 			} catch (Exception e) {
@@ -448,4 +449,5 @@ public class adminPhongCtrl {
 			}
 			return "redirect:/admin/phong.htm";
 		}
+		
 }

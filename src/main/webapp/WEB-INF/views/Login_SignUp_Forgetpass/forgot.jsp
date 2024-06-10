@@ -122,5 +122,25 @@ h2 {
 		</div>
 	</section>
 	<jsp:include page="/WEB-INF/views/footer.jsp" />
+	<script>
+		function validateForm() {
+			var email = document.getElementById("email").value;
+			var emailError = document.getElementById("email-error");
+			var valid = true;
+
+			if (email === "") {
+				emailError.innerText = "Email không được để trống.";
+				emailError.style.display = "block";
+				valid = false;
+			} else if (!(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) {
+				emailError.innerText = "Email không hợp lệ.";
+				emailError.style.display = "block";
+				valid = false;
+			} else {
+				emailError.style.display = "none";
+			}
+			return valid;
+		}
+	</script>
 </body>
 </html>

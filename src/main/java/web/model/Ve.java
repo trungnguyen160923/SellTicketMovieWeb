@@ -16,9 +16,6 @@ public class Ve {
     private CaChieu caChieu;
 	
 	
-	@Column(name="GIAVE")
-    private double giaVe;
-	
 	@ManyToOne
 	@JoinColumn(name="maLoaiGhe")
     private LoaiGhe loaiGhe;
@@ -32,7 +29,6 @@ public class Ve {
     public Ve(int maVe, CaChieu caChieu, double giaVe) {
         this.maVe = maVe;
         this.caChieu = caChieu;
-        this.giaVe = giaVe;
     }
 
     public int getMaVe() {
@@ -49,16 +45,6 @@ public class Ve {
 
     public void setCaChieu(CaChieu caChieu) {
         this.caChieu = caChieu;
-    }
-
-    
-
-    public double getGiaVe() {
-        return giaVe;
-    }
-
-    public void setGiaVe(double giaVe) {
-        this.giaVe = giaVe;
     }
     
     public LoaiGhe getLoaiGhe() {
