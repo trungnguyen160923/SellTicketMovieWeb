@@ -302,7 +302,7 @@ input {
 							href="user/phong.htm">Đặt vé</a></li>
 						<li class="nav-item"><a class="nav-link"
 							href="user/caChieuUser.htm">Lịch chiếu</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">Thanh
+						<li class="nav-item"><a class="nav-link" href="user/thanhToan.htm">Thanh
 								toán</a></li>
 						<li class="nav-item"><a class="nav-link" href="#">Khác</a></li>
 					</ul>
