@@ -343,7 +343,7 @@ body {
 			} else {
 				passwordConfirmError.style.display = "none";
 			}
-			return valid;
+			return false;
 		}
 
 		function togglePassword(id) {
