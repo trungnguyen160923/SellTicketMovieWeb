@@ -46,7 +46,7 @@ public class loginController {
             	 session.setAttribute("user", user); 
             	if (user.getVaiTro().getMaVaiTro() == 1) {
             		return "redirect:/admin/home";
-            	}else return "redirect:/customer/home";
+            	}else return "redirect:/user/infor.htm";
             } else {
                 model.addAttribute("error", "Tên đăng nhập hoặc mật khẩu không chính xác.");
                 return "Login_SignUp_Forgetpass/Login";
@@ -70,20 +70,13 @@ public class loginController {
     public String checksignup(ModelMap model, @ModelAttribute("taikhoan") TaiKhoan taikhoan) {
         Session session = factory.openSession();
         try {
-        	String hql1 = "FROM TaiKhoan WHERE sdt = :sdt ";
+        	String hql1 = "FROM TaiKhoan WHERE sdt = :sdt or email =: email";
             Query query1 = session.createQuery(hql1);
             query1.setParameter("sdt", taikhoan.getSdt());
+            query1.setParameter("email", taikhoan.getEmail());
             TaiKhoan user1 = (TaiKhoan) query1.uniqueResult();
             if (user1 != null) {
-                model.addAttribute("error", "Số điện thoại đã được sử dụng.");
-                return "Login_SignUp_Forgetpass/SignUp";
-            }
-        	String hql = "FROM TaiKhoan WHERE email = :email ";
-            Query query = session.createQuery(hql);
-            query.setParameter("email", taikhoan.getEmail());
-            TaiKhoan user = (TaiKhoan) query.uniqueResult();
-            if (user != null) {
-                model.addAttribute("error", "Email đã được sử dụng.");
+                model.addAttribute("error", "Số điện thoại hoặc email đã được sử dụng.");
                 return "Login_SignUp_Forgetpass/SignUp";
             }
             System.out.println("Pass");
