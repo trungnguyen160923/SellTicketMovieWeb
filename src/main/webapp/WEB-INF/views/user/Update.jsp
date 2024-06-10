@@ -162,8 +162,7 @@
 			</div>
 		</form:form>
 	</div>
-</body>
-<script>
+	<script>
 	function validateForm() {
 		var fullname = document.getElementById("fullname").value;
 		var address = document.getElementById("address").value;
@@ -245,4 +244,5 @@
 		return false;
 	}
 </script>
+</body>
 </html>

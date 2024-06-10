@@ -176,8 +176,7 @@
 			</div>
 		</form>
 	</div>
-</body>
-<script>
+	<script>
 	function validateForm() {
 		var password = document.getElementById("oldPassword").value;
 		var passwordnew = document.getElementById("newPassword").value;
@@ -256,4 +255,5 @@
 		}
 	}
 </script>
+</body>
 </html>
