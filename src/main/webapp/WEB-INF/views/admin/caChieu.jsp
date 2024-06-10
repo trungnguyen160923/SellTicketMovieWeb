@@ -92,9 +92,9 @@
                             <td>${cc.ngayChieu}</td>
                             <td>${cc.gioBatDau}</td>
                             <td>${cc.gioKetThuc}</td>
-                            <td>
-                                <button type="button" class="btn btn-success">Sửa</button>
-                                <button type="button" class="btn btn-danger">Xóa</button>
+                            <td>  
+                            	<button type="button" class="btn btn-success btn_update_caChieu" onclick="prepareUpdate(${cc.maCaChieu})">Sửa</button>
+                                <button type="button" class="btn btn-danger" onclick="prepareDelete(${cc.maCaChieu})">Xóa</button>
                             </td>
                         </tr>
                         </c:forEach>
@@ -104,6 +104,16 @@
         </div>
     </div>
 </div>
+<!--Form ảo để sửa -->
+<form id="updateCaChieuForm" method="GET" action="admin/updateCaChieu.htm">
+    	<input type="hidden" name="maCaChieu" id="maCaChieuInput">
+	</form>
+<!--End form ảo để sửa  -->
+<!--Form ảo để xóa  -->
+<form id="deleteCaChieuForm" method="POST" action="admin/deleteCaChieu.htm">
+    	<input type="hidden" name="maCaChieu" id="maCaChieuInputDelete">
+</form>
+<!--End form ảo để xóa  -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
@@ -130,6 +140,22 @@
         // Chuyển hướng người dùng đến đường dẫn mới
         window.location.href = url;
     });
+	// chuyển sang trang updateCaChieu
+	function prepareUpdate(maCaChieu) {
+	    // Đặt giá trị cho trường ẩn trong form
+	    document.getElementById('maCaChieuInput').value = maCaChieu;
+	    // Gửi yêu cầu POST bằng cách gửi form
+	    document.getElementById('updateCaChieuForm').submit();
+	}
+	// end chuyển sang trang updateCaChieu
+	// Xóa ca Chiếu
+	function prepareDelete(maCaChieu) {
+	    // Đặt giá trị cho trường ẩn trong form
+	    document.getElementById('maCaChieuInputDelete').value = maCaChieu;
+	    // Gửi yêu cầu POST bằng cách gửi form
+	    document.getElementById('deleteCaChieuForm').submit();
+	}
+	// Xóa ca chiếu
 </script>
 </body>
 </html>

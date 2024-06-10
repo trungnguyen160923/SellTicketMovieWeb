@@ -60,10 +60,10 @@
                         <a class="nav-link" aria-current="page" href="admin/index.htm">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="admin/phong.htm">Phòng</a>
+                        <a class="nav-link " href="admin/phong.htm">Phòng</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Sắp Lịch</a>
+                        <a class="nav-link active" href="admin/caChieu.htm">Sắp Lịch</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Khác</a>
@@ -75,15 +75,15 @@
     </header>
     <div class="main">
         <div class="form-section row">
-            <div class="col-md-6">
+            <form class="col-md-6 form_themCaChieu" method="POST" action="admin/taoCaChieu.htm" enctype="application/x-www-form-urlencoded" onsubmit="return validateSchedule()">
                 <!-- Chọn phim section -->
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="selectPhim" class="form-label">Chọn phim: </label>
-                        <select id="selectPhim" name="maPhim" class="form-select">
-                            <option selected>Chọn Phim</option>
+                        <select id="selectPhim" name="maPhim" class="form-select" >
+                            <option selected value="">Chọn Phim</option>
                             <c:forEach var="p" items="${phims}">
-                            <option value="${p.maPhim}">${p.tenPhim}</option>
+                            <option value="${p.maPhim}" data-thoiLuong="${p.thoiLuong}">${p.tenPhim}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -95,30 +95,31 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="selectPhong" class="form-label">Chọn phòng: </label>
-                        <select id="selectPhong" name="maPhong" class="form-select">
-                            <option selected>Chọn Phòng</option>
+                        <select id="selectPhong" name="maPhong" class="form-select" disabled>
+                            <option selected value="">Chọn Phòng</option>
                             <c:forEach var="p" items="${phongs}">
                             	<option value="${p.maPhong}">${p.tenPhong}</option>
                             </c:forEach>
                         </select>
                     </div>
                     <div class="col-md-6 d-flex align-items-center">
-                        <button class="btn btn-primary w-80">Xem Thông Tin Phòng</button>
+                        <button class="btn btn-primary w-80 btn_disable" disabled>Xem Thông Tin Phòng</button>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="chonNgayChieu" class="form-label">Chọn ngày chiếu</label>
-                    <input type="date" id="chonNgayChieu" name="ngayChieu" class="form-control">
+                    <input type="date" id="chonNgayChieu" name="ngayChieu" class="form-control" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="gioBatDau" class="form-label">Giờ bắt đầu</label>
-                    <input type="time" id="gioBatDau" name="gioBatDau" class="form-control">
+                    <input type="time" id="gioBatDau" name="gioBatDau" class="form-control" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="gioKetThuc" class="form-label">Giờ kết thúc</label>
-                    <input type="time" id="gioKetThuc" name="gioKetThuc" class="form-control">
+                    <input type="time" id="gioKetThuc" name="gioKetThuc" class="form-control" disabled>
                 </div>
-            </div>
+                <button type="submit" class="btn btn-primary w-100 btn_disable" disabled >Lưu</button>
+            </form>
 
             <div class="col-md-6">
                 <h5>Ca Chiếu của phòng trong ngày</h5>
@@ -135,14 +136,6 @@
                 </table>
             </div>
         </div>
-        <div class="form-section row">
-            <div class="col-md-6">
-                <button type="button" class="btn btn-primary w-100">Đặt Giá Vé</button>
-            </div>
-            <div class="col-md-6">
-                <button type="button" class="btn btn-primary w-100">Lưu</button>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -150,7 +143,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 <script>
-		
+		// chuyển kiểu dữ liệu ca chiếu
 		var caChieus = [
 			<c:forEach items="${caChieus}" var="cc" varStatus="loop">
 			{
@@ -168,6 +161,8 @@
         document.getElementById('chonNgayChieu').addEventListener('change', updateCaChieu);
         document.getElementById('selectPhong').addEventListener('change', updateCaChieu);
 
+        
+        // Cập nhật bảng ca Chiếu với ngày chiếu và mã phòng
         function updateCaChieu() {
             const ngayChieu = document.getElementById('chonNgayChieu').value;
             const maPhong = document.getElementById('selectPhong').value;
@@ -176,7 +171,6 @@
                 const filteredCaChieus = caChieus.filter(ca => {
                     return ca.ngayChieu == ngayChieu && ca.maPhong == maPhong;
                 });
-                console.log(filteredCaChieus);
 
                 const tbody = document.getElementById('caChieuTableBody');
                 tbody.innerHTML = '';
@@ -201,7 +195,78 @@
                 });
             }
         }
-		
+        
+        // Set disable và undisable cho button
+        document.getElementById('selectPhim').addEventListener('change', function() {
+            const isPhimSelected = this.value !== "";
+            
+            document.getElementById('selectPhong').disabled = !isPhimSelected;
+            document.getElementById('chonNgayChieu').disabled = !isPhimSelected;
+            document.getElementById('gioBatDau').disabled = !isPhimSelected;
+            document.getElementById('gioKetThuc').disabled = !isPhimSelected;
+
+            const buttons = document.querySelectorAll('.btn_disable');
+            buttons.forEach(button => {
+                button.disabled = !isPhimSelected;
+            });
+        });
+        // Cập nhật giờ kết thúc theo giờ bắt đầu và thời lượng phim
+        document.getElementById('gioBatDau').addEventListener('change', updateGioKetThuc);
+        function updateGioKetThuc() {
+            const selectedPhim = document.getElementById('selectPhim');
+            const thoiLuong = parseInt(selectedPhim.options[selectedPhim.selectedIndex].getAttribute('data-thoiLuong'));
+            const gioBatDau = document.getElementById('gioBatDau').value;
+
+            if (gioBatDau && !isNaN(thoiLuong)) {
+                const [hour, minute] = gioBatDau.split(':').map(Number);
+                const startTime = new Date();
+                startTime.setHours(hour, minute);
+
+                const endTime = new Date(startTime.getTime() + thoiLuong * 60000);
+
+                const endHour = String(endTime.getHours()).padStart(2, '0');
+                const endMinute = String(endTime.getMinutes()).padStart(2, '0');
+
+                document.getElementById('gioKetThuc').value = endHour+":" +endMinute;
+            }
+        }
+     // Hàm validateSchedule để kiểm tra sự chồng chéo của lịch chiếu
+        function validateSchedule() {
+            const ngayChieu = document.getElementById('chonNgayChieu').value;
+            const maPhong = document.getElementById('selectPhong').value;
+            const gioBatDau = document.getElementById('gioBatDau').value;
+            const gioKetThuc = document.getElementById('gioKetThuc').value;
+
+            if (ngayChieu && maPhong && gioBatDau && gioKetThuc) {
+                // Chuyển đổi giờ bắt đầu và giờ kết thúc của lịch mới thành phút
+                const [newStartHour, newStartMinute] = gioBatDau.split(':').map(Number);
+                const newStartTime = newStartHour * 60 + newStartMinute;
+
+                const [newEndHour, newEndMinute] = gioKetThuc.split(':').map(Number);
+                const newEndTime = newEndHour * 60 + newEndMinute;
+
+                // Lọc các ca chiếu cùng ngày và cùng phòng
+                const filteredCaChieus = caChieus.filter(ca => ca.ngayChieu == ngayChieu && ca.maPhong == maPhong);
+
+                for (const ca of filteredCaChieus) {
+                    // Chuyển đổi giờ bắt đầu và giờ kết thúc của ca chiếu hiện tại thành phút
+                    const [existingStartHour, existingStartMinute] = ca.gioBatDau.split(':').map(Number);
+                    const existingStartTime = existingStartHour * 60 + existingStartMinute;
+                    
+                    const [existingEndHour, existingEndMinute] = ca.gioKetThuc.split(':').map(Number);
+                    const existingEndTime = existingEndHour * 60 + existingEndMinute;
+
+                    // Kiểm tra sự chồng chéo
+                    if ((newStartTime >= existingStartTime && newStartTime < existingEndTime) ||
+                        (newEndTime > existingStartTime && newEndTime <= existingEndTime) ||
+                        (newStartTime <= existingStartTime && newEndTime >= existingEndTime)) {
+                        alert('Lịch chiếu bị trùng! Vui lòng chọn giờ khác.');
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
     </script>
 </body>
 </html>
