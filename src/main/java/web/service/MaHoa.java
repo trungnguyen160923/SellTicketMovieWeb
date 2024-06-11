@@ -1,23 +1,17 @@
 package web.service;
 
-import java.security.MessageDigest;
-
-import org.apache.tomcat.util.codec.binary.Base64;
-
+import at.favre.lib.crypto.bcrypt.BCrypt;
 
 public class MaHoa {
-	public static String toSHA1(String str) {
-		String salt = "asjrlkmcoewj@tjle;oxqskjhdjksjf1jurVn";
-		String result = null;
-		
-		str = str + salt;
-		try {
-			byte[] dataBytes = str.getBytes("UTF-8");
-			MessageDigest md = MessageDigest.getInstance("SHA-1");
-			result = Base64.encodeBase64String(md.digest(dataBytes));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
+
+    // Phương thức tĩnh để mã hóa mật khẩu
+    public static String hashPassword(String password) {
+        return BCrypt.withDefaults().hashToString(12, password.toCharArray());
+    }
+
+    // Phương thức tĩnh để xác minh mật khẩu
+    public static boolean verifyPassword(String password, String hash) {
+        BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), hash);
+        return result.verified;
+    }
 }

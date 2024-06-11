@@ -145,8 +145,6 @@
 						<label for="oldPassword">Nhập lại mật khẩu cũ:<span>*</span></label>
 						<input type="password" placeholder="Nhập mật khẩu của bạn"
 							id="oldPassword" name="oldPassword" class="form-control" />
-							<i class="gg-eye toggle-password"
-										onclick="togglePassword('oldPassword')"></i>
 						<div id="oldPassword-error" class="error-message"></div>
 					</div>
 				</div>
@@ -155,8 +153,6 @@
 						<label for="newPassword">Nhập mật khẩu mới:<span>*</span></label>
 						<input type="password" placeholder="Nhập mật khẩu của bạn"
 							id="newPassword" name="newPassword" class="form-control" />
-							<i class="gg-eye toggle-password"
-										onclick="togglePassword('newPassword')"></i>
 						<div id="newPassword-error" class="error-message"></div>
 					</div>
 				</div>
@@ -165,8 +161,6 @@
 						<label for="passwordConfirm">Xác nhận mật khẩu mới:<span>*</span></label>
 						<input type="password" placeholder="Xác nhận lại mật khẩu của bạn"
 							id="passwordConfirm" name="passwordConfirm" class="form-control" />
-							<i class="gg-eye toggle-password"
-										onclick="togglePassword('passwordConfirm')"></i>
 						<div id="passwordConfirm-error" class="error-message"></div>
 					</div>
 				</div>
@@ -239,20 +233,6 @@
 			passwordConfirmError.style.display = "none";
 		}
 		return true;
-	}
-	
-	function togglePassword(id) {
-		var input = document.getElementById(id);
-		var icon = input.nextElementSibling;
-		if (input.type === "password") {
-			input.type = "text";
-			icon.classList.remove('gg-eye');
-			icon.classList.add('gg-eye-alt');
-		} else {
-			input.type = "password";
-			icon.classList.remove('gg-eye-alt');
-			icon.classList.add('gg-eye');
-		}
 	}
 </script>
 </body>

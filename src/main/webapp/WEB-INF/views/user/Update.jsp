@@ -160,89 +160,99 @@
 			<div class="btn-footer">
 				<input type="submit" value="Lưu thay đổi" class="btn-btn">
 			</div>
+				<c:if test="${not empty error}">
+					<script>
+						alert("${error}");
+					</script>
+				</c:if>
+				<c:if test="${not empty message}">
+					<script>
+						alert("${message}");
+					</script>
+				</c:if>
 		</form:form>
 	</div>
 	<script>
-	function validateForm() {
-		var fullname = document.getElementById("fullname").value;
-		var address = document.getElementById("address").value;
-		var phone = document.getElementById("phone").value;
-		var email = document.getElementById("email").value;
-		var birthdate = document.getElementById("birthdate").value;
-		var gender = document.getElementById("gender").value;
-		var fullnameError = document.getElementById("fullname-error");
-		var addressError = document.getElementById("address-error");
-		var phoneError = document.getElementById("phone-error");
-		var emailError = document.getElementById("email-error");
-		var birthdateError = document.getElementById("birthdate-error");
-		var genderError = document.getElementById("gender-error");
-		var valid = true;
+		function validateForm() {
+			var fullname = document.getElementById("fullname").value;
+			var address = document.getElementById("address").value;
+			var phone = document.getElementById("phone").value;
+			var email = document.getElementById("email").value;
+			var birthdate = document.getElementById("birthdate").value;
+			var gender = document.getElementById("gender").value;
+			var fullnameError = document.getElementById("fullname-error");
+			var addressError = document.getElementById("address-error");
+			var phoneError = document.getElementById("phone-error");
+			var emailError = document.getElementById("email-error");
+			var birthdateError = document.getElementById("birthdate-error");
+			var genderError = document.getElementById("gender-error");
+			var valid = true;
 
-		if (fullname === "") {
-			fullnameError.innerText = "Tên đầy đủ không được để trống.";
-			fullnameError.style.display = "block";
-			valid = false;
-		} else if (/\d/.test(fullname)) {
-			fullnameError.innerText = "Tên đầy đủ không được chứa chữ số.";
-			fullnameError.style.display = "block";
-			valid = false;
-		} else {
-			fullnameError.style.display = "none";
-		}
+			if (fullname === "") {
+				fullnameError.innerText = "Tên đầy đủ không được để trống.";
+				fullnameError.style.display = "block";
+				valid = false;
+			} else if (/\d/.test(fullname)) {
+				fullnameError.innerText = "Tên đầy đủ không được chứa chữ số.";
+				fullnameError.style.display = "block";
+				valid = false;
+			} else {
+				fullnameError.style.display = "none";
+			}
 
-		if (address === "") {
-			addressError.innerText = "Địa chỉ không được để trống.";
-			addressError.style.display = "block";
-			valid = false;
-		} else {
-			addressError.style.display = "none";
-		}
+			if (address === "") {
+				addressError.innerText = "Địa chỉ không được để trống.";
+				addressError.style.display = "block";
+				valid = false;
+			} else {
+				addressError.style.display = "none";
+			}
 
-		if (phone === "") {
-			phoneError.innerText = "Số điện thoại không được để trống.";
-			phoneError.style.display = "block";
-			valid = false;
-		} else if (!/^\d+$/.test(phone)) {
-			phoneError.innerText = "Số điện thoại chỉ được chứa chữ số.";
-			phoneError.style.display = "block";
-			valid = false;
-		} else if (!/^\d{10}$/.test(phone)) {
-			phoneError.innerText = "Số điện thoại phải chứa đúng 10 chữ số.";
-			phoneError.style.display = "block";
-			valid = false;
-		} else {
-			phoneError.style.display = "none";
-		}
+			if (phone === "") {
+				phoneError.innerText = "Số điện thoại không được để trống.";
+				phoneError.style.display = "block";
+				valid = false;
+			} else if (!/^\d+$/.test(phone)) {
+				phoneError.innerText = "Số điện thoại chỉ được chứa chữ số.";
+				phoneError.style.display = "block";
+				valid = false;
+			} else if (!/^\d{10}$/.test(phone)) {
+				phoneError.innerText = "Số điện thoại phải chứa đúng 10 chữ số.";
+				phoneError.style.display = "block";
+				valid = false;
+			} else {
+				phoneError.style.display = "none";
+			}
 
-		if (email === "") {
-			emailError.innerText = "Email không được để trống.";
-			emailError.style.display = "block";
-			valid = false;
-		} else if (!(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) {
-			emailError.innerText = "Email không hợp lệ.";
-			emailError.style.display = "block";
-			valid = false;
-		} else {
-			emailError.style.display = "none";
-		}
+			if (email === "") {
+				emailError.innerText = "Email không được để trống.";
+				emailError.style.display = "block";
+				valid = false;
+			} else if (!(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) {
+				emailError.innerText = "Email không hợp lệ.";
+				emailError.style.display = "block";
+				valid = false;
+			} else {
+				emailError.style.display = "none";
+			}
 
-		if (birthdate === "") {
-			birthdateError.innerText = "Ngày sinh không được để trống.";
-			birthdateError.style.display = "block";
-			valid = false;
-		} else {
-			birthdateError.style.display = "none";
-		}
+			if (birthdate === "") {
+				birthdateError.innerText = "Ngày sinh không được để trống.";
+				birthdateError.style.display = "block";
+				valid = false;
+			} else {
+				birthdateError.style.display = "none";
+			}
 
-		if (gender === "") {
-			genderError.innerText = "Giới tính không được để trống.";
-			genderError.style.display = "block";
-			valid = false;
-		} else {
-			genderError.style.display = "none";
+			if (gender === "") {
+				genderError.innerText = "Giới tính không được để trống.";
+				genderError.style.display = "block";
+				valid = false;
+			} else {
+				genderError.style.display = "none";
+			}
+			return false;
 		}
-		return false;
-	}
-</script>
+	</script>
 </body>
 </html>

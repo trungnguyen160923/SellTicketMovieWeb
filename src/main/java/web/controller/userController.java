@@ -4,10 +4,10 @@ import javax.servlet.http.HttpSession;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,18 +28,7 @@ public class userController {
         if (user == null) {
             return "redirect:/login.htm";
         }
-        model.addAttribute("user", user);
-        String error = (String) session.getAttribute("error");
-        String message = (String) session.getAttribute("message");
-        if (error != null) {
-            model.addAttribute("error", error);
-            session.removeAttribute("error");
-        }
-        if (message != null) {
-            model.addAttribute("message", message);
-            session.removeAttribute("message");
-        }
-        
+        model.addAttribute("user", user);       
         return "user/AccountIn4";
     }
 
@@ -55,7 +44,7 @@ public class userController {
                 TaiKhoan user1 = (TaiKhoan) query1.uniqueResult();
                 if (user1 != null) {
                     session.setAttribute("error", "Số điện thoại đã được sử dụng.");
-                    return "redirect:/user/infor.htm";
+                    return "user/AccountIn4";
                 }
             }
             if (!userFromForm.getEmail().equals(user.getEmail())) {
@@ -65,13 +54,13 @@ public class userController {
                 TaiKhoan user2 = (TaiKhoan) query2.uniqueResult();
                 if (user2 != null) {
                     session.setAttribute("error", "Email đã được sử dụng.");
-                    return "redirect:/user/infor.htm";
+                    return "user/AccountIn4";
                 }
             }
         } catch (Exception e) {
             session.setAttribute("error", "Đã xảy ra lỗi. Vui lòng thử lại sau.");
             e.printStackTrace();
-            return "redirect:/user/infor.htm";
+            return "user/AccountIn4";
         }
 
         try {
@@ -85,36 +74,46 @@ public class userController {
             hibernateSession.getTransaction().commit();
             session.setAttribute("user", userFromForm);
             session.setAttribute("message", "Lưu thông tin thành công!");
-            return "redirect:/user/infor.htm";
+            return "user/AccountIn4";
         } catch (Exception e) {
             hibernateSession.getTransaction().rollback();
             session.setAttribute("error", "Đã xảy ra lỗi. Vui lòng thử lại sau.");
             e.printStackTrace();
-            return "redirect:/user/infor.htm";
+            return "user/AccountIn4";
         } finally {
             hibernateSession.close();
         }
     }
 
     @RequestMapping(value = "/Change-pass", method = RequestMethod.POST)
-    public String changepass(ModelMap model, @RequestParam("oldPassword") String oldPassword,
+    public String changePass(ModelMap model, @RequestParam("oldPassword") String oldPassword,
                              @RequestParam("newPassword") String newPassword, HttpSession session) {
         TaiKhoan user = (TaiKhoan) session.getAttribute("user");
         Session hibernateSession = factory.openSession();
-        try {
-            hibernateSession.beginTransaction();
-            user.setMatKhau(MaHoa.toSHA1(newPassword));
-            hibernateSession.update(user);
-            hibernateSession.getTransaction().commit();
+        Transaction tx = null;
 
-            session.setAttribute("user", user);
-            session.setAttribute("message", "Lưu thông tin thành công!");
-            return "redirect:/user/infor.htm";
+        try {
+            // Kiểm tra mật khẩu cũ
+            if (MaHoa.verifyPassword(oldPassword, user.getMatKhau())) {
+                // Mã hóa mật khẩu mới và cập nhật vào cơ sở dữ liệu
+                tx = hibernateSession.beginTransaction();
+                user.setMatKhau(MaHoa.hashPassword(newPassword));
+                hibernateSession.update(user);
+                tx.commit();
+
+                // Cập nhật session
+                session.setAttribute("user", user);
+                session.setAttribute("message", "Lưu thông tin thành công!");
+                return "user/AccountIn4";
+            } else {
+                session.setAttribute("error", "Mật khẩu cũ không đúng.");
+                return "user/AccountIn4";
+            }
         } catch (Exception e) {
-            hibernateSession.getTransaction().rollback();
+            if (tx != null) tx.rollback();
             session.setAttribute("error", "Đã xảy ra lỗi. Vui lòng thử lại sau.");
             e.printStackTrace();
-            return "redirect:/user/infor.htm";
+            return "user/AccountIn4";
         } finally {
             hibernateSession.close();
         }
