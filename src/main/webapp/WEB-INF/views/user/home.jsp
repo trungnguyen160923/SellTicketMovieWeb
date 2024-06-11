@@ -60,7 +60,7 @@
 							href="user/caChieuUser.htm">Lịch chiếu</a></li>
 						<li class="nav-item"><a class="nav-link" href="user/thanhToan.htm">Thanh
 								toán</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">Thông
+						<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath}/user/infor.htm">Thông
 								tin cá nhân</a></li>
 					</ul>
 				</div>
