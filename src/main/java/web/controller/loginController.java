@@ -104,4 +104,11 @@ public class loginController {
             return "Login_SignUp_Forgetpass/forgot";
         }
     }
+    
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("user");
+        return "redirect:/login.htm";
+    }
+
 }

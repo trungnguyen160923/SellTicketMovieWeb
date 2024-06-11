@@ -46,9 +46,9 @@ public class UserService {
     @Transactional
     public String changePassword(TaiKhoan user, String oldPassword, String newPassword) {
         Session session = factory.getCurrentSession();
-
-        if (MaHoa.verifyPassword(oldPassword, user.getMatKhau())) {
-            user.setMatKhau(MaHoa.hashPassword(newPassword));
+        if (oldPassword.equals(user.getMatKhau())) {
+//        if (MaHoa.verifyPassword(oldPassword, user.getMatKhau())) {
+            user.setMatKhau(newPassword);
             session.update(user);
             return null;
         } else {
