@@ -417,6 +417,9 @@ body {
 	<!--End Thông báo  -->
 	<!--End Model Youtube  -->
 	<!--Phần script  -->
+	        <!--footer  -->
+       <%--  <jsp:include page="/WEB-INF/views/footer.jsp" /> --%>
+        <!--End Footer  -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
