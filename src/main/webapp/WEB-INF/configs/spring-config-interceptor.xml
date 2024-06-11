@@ -25,8 +25,8 @@
 		</mvc:interceptor>
 		 -->
 		 <mvc:interceptor>
-		 	<mvc:mapping path="/admin/**"/>
-			<mvc:mapping path="/user/**"/>
+<!-- 		 	<mvc:mapping path="/admin/**"/>
+			<mvc:mapping path="/user/**"/> -->
 			<mvc:mapping path="/order/**"/>
 			<mvc:exclude-mapping path="/user/login.htm"/>
 			<mvc:exclude-mapping path="/user/register.htm"/>

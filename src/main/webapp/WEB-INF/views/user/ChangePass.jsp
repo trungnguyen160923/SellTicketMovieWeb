@@ -10,8 +10,6 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/assets/css/account-info.css">
 </head>
 <style>
 .error-message {
