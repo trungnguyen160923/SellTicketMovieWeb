@@ -176,7 +176,7 @@ body {
 							onsubmit="return validateForm()">
 							<div class="row mb-3">
 								<div class="col-md-6">
-									<label id="maPhim" for="maPhim" class="form-label">Mã Phim:</label> <input
+									<label  for="maPhim" class="form-label">Mã Phim:</label> <input
 										type="text" class="form-control" name="maPhim"
 										value="${p.maPhim}" readonly>
 								</div>
@@ -504,10 +504,12 @@ const closeButton = modal.querySelector('.modal-header .custom-close-btn');
                 }
 
                 // Bỏ thuộc tính readonly từ các trường dữ liệu
+                var i = 0;
                 formControls.forEach(input => {
-                    if (input.id !== 'maPhim') {
+                    if (i != 0) {
                         input.removeAttribute('readonly');
                     }
+                    i++;
                 });
                 trangThai.removeAttribute('disabled');
             });
