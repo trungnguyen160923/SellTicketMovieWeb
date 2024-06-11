@@ -50,6 +50,7 @@ body {
 </style>
 </head>
 <body>
+
 	<div class="container-sm">
 		<header class="navbar navbar-expand-lg navbar-light col"
 			style="margin-bottom: 4.5rem;">
@@ -80,12 +81,13 @@ body {
 					style="width: 150px; height: 50px; border-radius: 15px; color: aliceblue">Đăng
 					Xuất</button>
 			</form>
-
 		</header>
+
 		<main class="table col listPhim_table" id="customers_table"
 			phims="${phims}">
 			<section class="table__header">
 				<h2>Danh Sách Phim</h2>
+
 				<div class="input-group">
 					<input type="search" style="height: 40px; border-radius: 20px"
 						placeholder="Tìm Kiếm...">
@@ -170,46 +172,48 @@ body {
 					<div class="modal-body">
 						<form class="form_film" method="POST"
 							action="admin/updatePhim.htm"
-							enctype="application/x-www-form-urlencoded">
+							enctype="application/x-www-form-urlencoded"
+							onsubmit="return validateForm()">
 							<div class="row mb-3">
 								<div class="col-md-6">
-									<label for="maPhim" class="form-label">Mã Phim:</label> <input
+									<label id="maPhim" for="maPhim" class="form-label">Mã Phim:</label> <input
 										type="text" class="form-control" name="maPhim"
 										value="${p.maPhim}" readonly>
 								</div>
 								<div class="col-md-6">
 									<label for="tenPhim" class="form-label">Tên Phim:</label> <input
 										type="text" class="form-control" id="tenPhim" name="tenPhim"
-										value="${p.tenPhim}" readonly>
+										value="${p.tenPhim}" readonly required>
 								</div>
 							</div>
 							<div class="row mb-3">
 								<div class="col-md-6">
 									<label for="trailer" class="form-label">Trailer:</label> <input
 										type="text" class="form-control" id="trailer" name="trailer"
-										value="${p.trailer}" readonly>
+										value="${p.trailer}" readonly required>
 								</div>
 								<div class="col-md-6">
-									<label for="thoiLuong" class="form-label">Thời Lượng:</label> <input
-										type="text" class="form-control" id="thoiLuong"
-										name="thoiLuong" value="${p.thoiLuong}" readonly>
+									<label for="thoiLuong" class="form-label">Thời
+										Lượng(Phút):</label> <input type="number" class="form-control"
+										id="thoiLuong" name="thoiLuong" value="${p.thoiLuong}"
+										readonly required>
 								</div>
 							</div>
 							<div class="mb-3">
 								<label for="moTa" class="form-label">Mô Tả:</label>
 								<textarea class="form-control" id="moTa" rows="3" name="moTa"
-									readonly>${p.moTa}</textarea>
+									required readonly>${p.moTa}</textarea>
 							</div>
 							<div class="row mb-3">
 								<div class="col-md-6">
 									<label for="luotXem" class="form-label">Lượt Xem:</label> <input
 										type="text" class="form-control" id="luotXem" name="luotXem"
-										value="${p.luotXem}" readonly>
+										value="${p.luotXem}" readonly required>
 								</div>
 								<div class="col-md-6">
 									<label for="luotThich" class="form-label">Lượt Thích:</label> <input
 										type="text" class="form-control" id="luotThich"
-										name="luotThich" value="${p.luotThich}" readonly>
+										name="luotThich" value="${p.luotThich}" readonly required>
 								</div>
 							</div>
 							<div class="row mb-3">
@@ -231,19 +235,19 @@ body {
 								<div class="col-md-6">
 									<label for="ngonNgu" class="form-label">Ngôn Ngữ:</label> <input
 										type="text" class="form-control" id="ngonNgu" name="ngonNgu"
-										value="${p.ngonNgu}" readonly>
+										value="${p.ngonNgu}" required readonly>
 								</div>
 							</div>
 							<div class="row mb-3">
 								<div class="col-md-6">
 									<label for="phuDe" class="form-label">Phụ Đề:</label> <input
 										type="text" class="form-control" id="phuDe" name="phuDe"
-										value="${p.phuDe}" readonly>
+										value="${p.phuDe}" required readonly>
 								</div>
 								<div class="col-md-6">
 									<label for="gioiHanTuoi" class="form-label">Giới Hạn
 										Tuổi:</label> <input type="text" class="form-control" id="gioiHanTuoi"
-										name="gioiHanTuoi" value="${p.gioiHanTuoi}" readonly>
+										name="gioiHanTuoi" value="${p.gioiHanTuoi}" required readonly>
 								</div>
 							</div>
 							<div class="row mb-3">
@@ -251,25 +255,44 @@ body {
 									<label for="ngayHieuLucTu" class="form-label">Ngày Hiệu
 										Lực Từ:</label> <input type="date" class="form-control"
 										id="ngayHieuLucTu" name="ngayHieuLucTu"
-										placeholder="mm/dd/yyyy" value="${p.ngayHieuLucTu}" readonly>
+										placeholder="mm/dd/yyyy" value="${p.ngayHieuLucTu}" required
+										readonly>
 								</div>
 								<div class="col-md-6">
 									<label for="ngayHieuLucDen" class="form-label">Ngày
 										Hiệu Lực Đến:</label> <input type="date" class="form-control"
 										id="ngayHieuLucDen" name="ngayHieuLucDen"
-										placeholder="mm/dd/yyyy" value="${p.ngayHieuLucDen}" readonly>
+										placeholder="mm/dd/yyyy" value="${p.ngayHieuLucDen}" required
+										readonly>
 								</div>
 							</div>
 							<div class="mb-3">
 								<label for="anhBia" class="form-label">Ảnh Bìa:</label> <img
 									src="${p.anhBia}" style="height: 1000px" alt="Ảnh Bìa"
 									class="img-fluid mb-2" id="currentAnhBia"> <input
-									type="file" class="form-control" id="anhBia" name="anhBia"
-									accept="image/*" style="display: none;">
+									type="text" class="form-control" id="anhBia" name="anhBia"
+									accept="image/*" style="display: none;" value="${p.anhBia}">
 							</div>
 
 
 						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-warning" id="changeButton">Chỉnh
+							Sửa</button>
+						<button type="submit" class="btn btn-primary" id="saveButton"
+							style="display: none;">Lưu</button>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:forEach>
+	<!--End Phần Model  -->
+	<!--Model Thêm Phim  -->
+
 	<div class="modal fade" id="addPhimModel" data-bs-backdrop="static"
 		data-bs-keyboard="false" tabindex="-1"
 		aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -298,8 +321,8 @@ body {
 						<div class="row mb-3">
 							<div class="col-md-6">
 								<label for="thoiLuong" class="form-label">Thời Lượng
-									(phút):</label> <input type="text" class="form-control" id="thoiLuong"
-									name="thoiLuong" required>
+									(phút):</label> <input type="number" class="form-control"
+									id="thoiLuong" name="thoiLuong" required>
 							</div>
 							<div class="col-md-6">
 								<label for="ngonNgu" class="form-label">Ngôn Ngữ:</label> <input
@@ -338,8 +361,8 @@ body {
 						</div>
 						<div class="mb-3">
 							<label for="anhBia" class="form-label">Ảnh Bìa:</label> <input
-								type="file" class="form-control" id="anhBia" name="anhBia"
-								accept="image/*" required>
+								type="text" class="form-control" id="anhBia" name="anhBia"
+								required>
 						</div>
 						<div class="mb-3">
 							<label for="trangThai" class="form-label">Trạng Thái:</label> <select
@@ -384,6 +407,14 @@ body {
 			</div>
 		</div>
 	</c:forEach>
+
+	<!--Thông báo  -->
+	<c:if test="${not empty message}">
+		<script>
+                        alert("${message}");
+                    </script>
+	</c:if>
+	<!--End Thông báo  -->
 	<!--End Model Youtube  -->
 	<!--Phần script  -->
 	<script
@@ -399,21 +430,6 @@ body {
 		integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
 		crossorigin="anonymous"></script>
 	<script>
-          </c:forEach>
-          
-     <!--Thông báo  -->
-        <c:if test="${not empty message}">
-                    <script>
-                        alert("${message}");
-                    </script>
-         		</c:if>
-        <!--End Thông báo  -->    
-    <!--End Model Youtube  -->
-    <!--Phần script  -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    <script>
     /* function showMovies(movie){
        console.log(movie);
         
@@ -450,7 +466,7 @@ body {
             const saveButton = modal.querySelector('.btn-primary');
             const anhBiaInput = modal.querySelector('#anhBia');
             const cancelButton = modal.querySelector('.modal-footer .btn-secondary');
-            const closeButton = modal.querySelector('.modal-header .custom-close-btn');
+const closeButton = modal.querySelector('.modal-header .custom-close-btn');
             const trangThai = modal.querySelector('#trangThai');
             const updateFormPhim = modal.querySelector('.form_film');
             updateFormPhim.addEventListener('submit', function(event) {
@@ -522,8 +538,7 @@ body {
 	        // Reset form fields
 	        addPhimForm.reset();
 	    });
-
-	    addPhimForm.addEventListener('submit', function(event) {
+addPhimForm.addEventListener('submit', function(event) {
 	        // Perform form validation or other actions before submitting
 	        if (!addPhimForm.checkValidity()) {
 	            event.preventDefault();

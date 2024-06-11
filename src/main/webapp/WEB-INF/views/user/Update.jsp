@@ -97,7 +97,7 @@
         <button class="return btn btn-primary" onclick="window.location.href='${pageContext.request.contextPath}/user/infor.htm'">Quay lại</button>
         <div class="AdminInfo">
             <h2>Chỉnh Sửa Thông Tin Cá Nhân</h2>
-            <form:form class="account-form" action="${pageContext.request.contextPath}/update-in4.htm" method="post" modelAttribute="user" onsubmit="return validateForm()">
+            <form:form class="account-form" action="${pageContext.request.contextPath}/user/update-in4.htm" method="post" modelAttribute="user" onsubmit="return validateForm()">
                 <div class="form-group row1">
                     <div class="col-md-6 group">
                         <label for="fullname">Tên đầy đủ<span>*</span></label>

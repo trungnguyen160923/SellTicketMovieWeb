@@ -36,7 +36,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link" aria-current="page"
-							href="user/index.htm">Trang chủ</a></li>
+							href="user/home.htm">Trang chủ</a></li>
 						<li class="nav-item"><a class="nav-link active"
 							href="user/phong.htm">Đặt vé</a></li>
 						<li class="nav-item"><a class="nav-link"

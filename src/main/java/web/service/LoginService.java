@@ -21,12 +21,11 @@ public class LoginService {
     @Transactional
     public TaiKhoan checkLogin(TaiKhoan taikhoan) {
         Session session = factory.getCurrentSession();
-        String hql = "FROM TaiKhoan WHERE email = :username and matKhau = :matkhau";
+        String hql = "FROM TaiKhoan WHERE email = :username";
         Query query = session.createQuery(hql);
         query.setParameter("username", taikhoan.getEmail());
-        query.setParameter("matkhau", taikhoan.getMatKhau());
         TaiKhoan user = (TaiKhoan) query.uniqueResult();
-        if (user != null) {
+        if (user != null && MaHoa.verifyPassword(taikhoan.getMatKhau(), user.getMatKhau())) {
             return user;
         }
         return null;
@@ -44,7 +43,7 @@ public class LoginService {
         if (user1 != null) {
             return "Số điện thoại hoặc email đã được sử dụng.";
         }
-        taikhoan.setMatKhau(taikhoan.getMatKhau());
+        taikhoan.setMatKhau(MaHoa.hashPassword(taikhoan.getMatKhau()));
         VaiTro vaiTro = new VaiTro();
         vaiTro.setMaVaiTro(3);
         taikhoan.setVaiTro(vaiTro);
@@ -66,8 +65,7 @@ public class LoginService {
             Random rd = new Random();
             int matkhaurd = rd.nextInt(9000000) + 1000000;
             String matkhaurandom = String.valueOf(matkhaurd);
-
-            user.setMatKhau(matkhaurandom);
+            user.setMatKhau(MaHoa.hashPassword(matkhaurandom));
             session.update(user);
             return matkhaurandom;
         }

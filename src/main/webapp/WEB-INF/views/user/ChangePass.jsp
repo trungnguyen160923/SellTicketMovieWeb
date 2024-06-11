@@ -119,7 +119,7 @@
 		<div class="AdminInfo">
 			<h2>Chỉnh Sửa Thông Tin Cá Nhân</h2>
 			<form:form class="account-form"
-				action="${pageContext.request.contextPath}/Change-pass.htm"
+				action="${pageContext.request.contextPath}/user/Change-pass.htm"
 				method="post" modelAttribute="user" onsubmit="return validateForm()">
 				<div class="group">
 					<label for="oldPassword">Nhập lại mật khẩu cũ:<span>*</span></label>
