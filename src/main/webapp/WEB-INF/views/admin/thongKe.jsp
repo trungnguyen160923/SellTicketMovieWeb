@@ -50,7 +50,7 @@
                                 <a class="nav-link active" href="admin/caChieu.htm">Sắp Lịch</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Khác</a>
+                                <a class="nav-link" href="admin/thongKe.htm">Thống Kê</a>
                             </li>
                         </ul>
                     </div>

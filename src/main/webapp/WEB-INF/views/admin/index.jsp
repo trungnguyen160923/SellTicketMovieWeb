@@ -270,23 +270,6 @@ body {
 
 
 						</form>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-bs-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-warning" id="changeButton">Chỉnh
-							Sửa</button>
-						<button type="submit" class="btn btn-primary" id="saveButton"
-							style="display: none;">Lưu</button>
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</c:forEach>
-	<!--End Phần Model  -->
-	<!--Model Thêm Phim  -->
-
 	<div class="modal fade" id="addPhimModel" data-bs-backdrop="static"
 		data-bs-keyboard="false" tabindex="-1"
 		aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -416,10 +399,28 @@ body {
 		integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
 		crossorigin="anonymous"></script>
 	<script>
+          </c:forEach>
+          
+     <!--Thông báo  -->
+        <c:if test="${not empty message}">
+                    <script>
+                        alert("${message}");
+                    </script>
+         		</c:if>
+        <!--End Thông báo  -->    
+    <!--End Model Youtube  -->
+    <!--Phần script  -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script>
     /* function showMovies(movie){
        console.log(movie);
         
     } */
+    
+    
+    
     document.addEventListener('DOMContentLoaded', function() {   
         var phims = [
             <c:forEach items="${phims}" var="phim" varStatus="loop">
@@ -451,6 +452,15 @@ body {
             const cancelButton = modal.querySelector('.modal-footer .btn-secondary');
             const closeButton = modal.querySelector('.modal-header .custom-close-btn');
             const trangThai = modal.querySelector('#trangThai');
+            const updateFormPhim = modal.querySelector('.form_film');
+            updateFormPhim.addEventListener('submit', function(event) {
+    	        // Perform form validation or other actions before submitting
+    	        if (!updateFormPhim.checkValidity()) {
+    	            event.preventDefault();
+    	            event.stopPropagation();
+    	        }
+    	        updateFormPhim.classList.add('was-validated');
+    	    }, false);
             
 
             function resetFormState() {
