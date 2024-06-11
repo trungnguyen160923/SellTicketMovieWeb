@@ -1,6 +1,10 @@
 package web.controller;
 
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,46 +20,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import web.model.Ghe;
 import web.model.LoaiGhe;
-import web.model.LoaiPhong;
-import web.model.Phim;
 import web.model.Phong;
 
 @Transactional
 @Controller
 @RequestMapping("/user/")
-public class userCtrl {
+public class ChonGheCtrl {
+
 	@Autowired
 	private SessionFactory factory;
-
-	// Trang Chủ Admin
-	@RequestMapping("index")
-	public String indexx(ModelMap model) {
-		Session session = factory.openSession();
-		String hql = "FROM Phim";
-		Query query = session.createQuery(hql);
-		List<Phim> list = query.list();
-		model.addAttribute("phims", list);
-		return "user/indexUser";
-	}
-
-	// Phòng Xem Phim
-	@RequestMapping("phong")
-	public String index(ModelMap model) {
-		Session session = factory.openSession();
-		String hql = "FROM Phong";
-
-		Query query = session.createQuery(hql);
-
-		List<Phong> list = query.list();
-
-		model.addAttribute("phongs", list);
-
-		return "user/phong";
-	}
-
-	// DatVe
-	@RequestMapping("DatVe")
-	public String chiTietPhong(@RequestParam("maPhong") Integer maPhong, ModelMap model) {
+	@RequestMapping("/chonghe")
+	public String chiTietPhong(@RequestParam("maPhong") Integer maPhong, ModelMap model,HttpSession httpSession) {
 		Session session = factory.openSession();
 		String hql = "FROM Phong p WHERE p.maPhong = :maPhong";
 		String hqlGhe = "FROM Ghe g WHERE g.phong.maPhong = :maPhong";
@@ -77,6 +52,6 @@ public class userCtrl {
 		model.addAttribute("loaiGhes", listLoaiGhe);
 		session.close();
 
-		return "user/DatVe";
+		return "user/ChonGhe";
 	}
 }

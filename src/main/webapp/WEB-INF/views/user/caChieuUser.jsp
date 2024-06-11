@@ -37,20 +37,22 @@
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link" aria-current="page"
 							href="user/home.htm">Trang chủ</a></li>
-						<li class="nav-item"><a class="nav-link active"
-							href="user/phong.htm">Đặt vé</a></li>
 						<li class="nav-item"><a class="nav-link"
 							href="user/caChieuUser.htm">Lịch chiếu</a></li>
                     <li class="nav-item">
                       <a class="nav-link" href="user/thanhToan.htm">Thanh toán</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="lienHe.htm">Thông tin cá nhân</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link"
+								href="${pageContext.servletContext.contextPath}/user/infor.htm">Thông
+									tin cá nhân</a></li>
                 </ul>
             </div>
         </div>
-        <button class="btn btn-info" style="width: 150px; height: 50px; border-radius: 15px; color: aliceblue;">Đăng Xuất</button>
+        <form action="<c:url value='/logout.htm'/>" method="post">
+					<button type="submit" class="btn btn-info"
+						style="width: 150px; height: 50px; border-radius: 15px; color: aliceblue">Đăng
+						Xuất</button>
+				</form>
     </header>
     <div class="main">
         <!-- Phần chọn ngày -->

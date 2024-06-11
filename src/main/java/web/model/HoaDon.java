@@ -111,6 +111,4 @@ public class HoaDon {
     public void setVe(Ve ve) {
         this.ve = ve;
     }
-    
-    
 }
