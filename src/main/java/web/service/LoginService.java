@@ -21,12 +21,13 @@ public class LoginService {
     @Transactional
     public TaiKhoan checkLogin(TaiKhoan taikhoan) {
         Session session = factory.getCurrentSession();
-        String hql = "FROM TaiKhoan WHERE email = :username";
+        String hql = "FROM TaiKhoan WHERE email = :username and matKhau = :matKhau ";
         Query query = session.createQuery(hql);
         query.setParameter("username", taikhoan.getEmail());
+        query.setParameter("matKhau", taikhoan.getMatKhau()	);
         TaiKhoan user = (TaiKhoan) query.uniqueResult();
-
-        if (user != null && MaHoa.verifyPassword(taikhoan.getMatKhau(), user.getMatKhau())) {
+		/* && MaHoa.verifyPassword(taikhoan.getMatKhau(), user.getMatKhau()) */
+        if (user != null ) {
             return user;
         }
         return null;

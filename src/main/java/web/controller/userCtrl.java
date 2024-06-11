@@ -28,55 +28,55 @@ public class userCtrl {
 	private SessionFactory factory;
 
 	// Trang Chủ Admin
-	@RequestMapping("index")
-	public String indexx(ModelMap model) {
-		Session session = factory.openSession();
-		String hql = "FROM Phim";
-		Query query = session.createQuery(hql);
-		List<Phim> list = query.list();
-		model.addAttribute("phims", list);
-		return "user/indexUser";
-	}
+//	@RequestMapping("index")
+//	public String indexx(ModelMap model) {
+//		Session session = factory.openSession();
+//		String hql = "FROM Phim";
+//		Query query = session.createQuery(hql);
+//		List<Phim> list = query.list();
+//		model.addAttribute("phims", list);
+//		return "user/indexUser";
+//	}
 
 	// Phòng Xem Phim
-	@RequestMapping("phong")
-	public String index(ModelMap model) {
-		Session session = factory.openSession();
-		String hql = "FROM Phong";
-
-		Query query = session.createQuery(hql);
-
-		List<Phong> list = query.list();
-
-		model.addAttribute("phongs", list);
-
-		return "user/phong";
-	}
+//	@RequestMapping("phong")
+//	public String index(ModelMap model) {
+//		Session session = factory.openSession();
+//		String hql = "FROM Phong";
+//
+//		Query query = session.createQuery(hql);
+//
+//		List<Phong> list = query.list();
+//
+//		model.addAttribute("phongs", list);
+//
+//		return "user/phong";
+//	}
 
 	// DatVe
-	@RequestMapping("DatVe")
-	public String chiTietPhong(@RequestParam("maPhong") Integer maPhong, ModelMap model) {
-		Session session = factory.openSession();
-		String hql = "FROM Phong p WHERE p.maPhong = :maPhong";
-		String hqlGhe = "FROM Ghe g WHERE g.phong.maPhong = :maPhong";
-		String hqlLoaiGhe = "FROM LoaiGhe";
-
-		Query query2 = session.createQuery(hqlLoaiGhe);
-		Query query = session.createQuery(hql);
-		query.setParameter("maPhong", maPhong);
-
-		Query query1 = session.createQuery(hqlGhe);
-		query1.setParameter("maPhong", maPhong);
-		List<LoaiGhe> listLoaiGhe = query2.list();
-
-		Phong phong = (Phong) query.uniqueResult();
-		List<Ghe> listGhes = query1.list();
-
-		model.addAttribute("phong", phong);
-		model.addAttribute("ghes", listGhes);
-		model.addAttribute("loaiGhes", listLoaiGhe);
-		session.close();
-
-		return "user/DatVe";
-	}
+//	@RequestMapping("DatVe")
+//	public String chiTietPhong(@RequestParam("maPhong") Integer maPhong, ModelMap model) {
+//		Session session = factory.openSession();
+//		String hql = "FROM Phong p WHERE p.maPhong = :maPhong";
+//		String hqlGhe = "FROM Ghe g WHERE g.phong.maPhong = :maPhong";
+//		String hqlLoaiGhe = "FROM LoaiGhe";
+//
+//		Query query2 = session.createQuery(hqlLoaiGhe);
+//		Query query = session.createQuery(hql);
+//		query.setParameter("maPhong", maPhong);
+//
+//		Query query1 = session.createQuery(hqlGhe);
+//		query1.setParameter("maPhong", maPhong);
+//		List<LoaiGhe> listLoaiGhe = query2.list();
+//
+//		Phong phong = (Phong) query.uniqueResult();
+//		List<Ghe> listGhes = query1.list();
+//
+//		model.addAttribute("phong", phong);
+//		model.addAttribute("ghes", listGhes);
+//		model.addAttribute("loaiGhes", listLoaiGhe);
+//		session.close();
+//
+//		return "user/DatVe";
+//	}
 }

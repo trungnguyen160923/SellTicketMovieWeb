@@ -83,7 +83,7 @@
                             <h5 class="card-title">${cc.phim.tenPhim}</h5>
                             <p class="card-text">${cc.phim.moTa}</p>
                             <button href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#movie_${cc.phim.maPhim}">Xem Chi Tiết</button>
-                            <a href="#" class="btn btn-primary">Đặt Vé</a>
+                            <button class="btn btn-primary" onclick="bookTicket(${cc.phim.maPhim})">Đặt Vé</button>
                             <button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#model_youtube_${cc.phim.maPhim}">Xem trailer</button>
                         </div>
                     </div> 
@@ -235,8 +235,11 @@
             movies[i].style.display = 'block';
         }
 
-        // Cập nhật nút phân trang
+        // Cập nhật nút phân trang 
         
+    }
+    function bookTicket(maPhim) {
+        window.location.href = "user/datve.htm?maPhim=" + maPhim;
     }
 
     // Hiển thị trang đầu tiên khi tải trang
