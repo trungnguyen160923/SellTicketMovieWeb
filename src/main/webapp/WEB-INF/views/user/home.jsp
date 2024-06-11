@@ -39,31 +39,36 @@
 <body>
     <div class="container">
     	<div class="row">
-            <header class="navbar navbar-expand-lg navbar-light col" style="margin-bottom: 4.5rem;">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="#"><img src="assets/images/logo/logo.png" alt="" class="mr-2">Pengu</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="admin/index.htm">Trang chủ</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="admin/phong.htm">Phòng</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="admin/caChieu.htm">Sắp Lịch</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Khác</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <button class="btn btn-info" style="width: 150px; height: 50px; border-radius: 15px; color: aliceblue">Đăng Xuất</button>
-            </header>
+           <header class="navbar navbar-expand-lg navbar-light col"
+			style="margin-bottom: 4.5rem;">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#"><img
+					src="assets\images\logo\logo.png" alt="" class="mr-2">Pengu</a>
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target="#navbarNav"
+					aria-controls="navbarNav" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav">
+						<li class="nav-item"><a class="nav-link" aria-current="page"
+							href="user/home.htm">Trang chủ</a></li>
+						<li class="nav-item"><a class="nav-link active"
+							href="user/phong.htm">Đặt vé</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="user/caChieuUser.htm">Lịch chiếu</a></li>
+						<li class="nav-item"><a class="nav-link" href="user/thanhToan.htm">Thanh
+								toán</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">Thông
+								tin cá nhân</a></li>
+					</ul>
+				</div>
+			</div>
+			<button class="btn btn-info"
+				style="width: 150px; height: 50px; border-radius: 15px; color: aliceblue">Đăng
+				Xuất</button>
+		</header>
         </div>
         <div class="main">
         	<div class="col">
