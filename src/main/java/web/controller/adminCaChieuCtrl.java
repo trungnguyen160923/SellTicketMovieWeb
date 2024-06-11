@@ -33,7 +33,7 @@ public class adminCaChieuCtrl {
     private SessionFactory factory;
 	
 	@RequestMapping("caChieu")
-	public String index(ModelMap model) {
+	public String index(ModelMap model,@ModelAttribute("message") String message) {
 		Session session = factory.openSession();
 		String hql = "FROM Phong";
 		String hqlLoaiPhong = "FROM LoaiPhong";
@@ -54,12 +54,13 @@ public class adminCaChieuCtrl {
 		model.addAttribute("loaiPhongs", listLoaiPhong);
 		model.addAttribute("loaiGhes", listLoaiGhe);
 		model.addAttribute("caChieus", listCaChieu);
+		model.addAttribute("message", message);
 		
 		return "admin/caChieu";
 	}
 	
 	@RequestMapping("themCaChieu")
-	public String addCaChieu(ModelMap model) {
+	public String addCaChieu(ModelMap model,@ModelAttribute("message") String message) {
 		Session session = factory.openSession();
 		String hql = "FROM Phong";
 		String hqlPhim = "FROM Phim";
@@ -84,6 +85,7 @@ public class adminCaChieuCtrl {
 		model.addAttribute("loaiGhes", listVe);
 		model.addAttribute("caChieus", listCaChieu);
 		model.addAttribute("loaiGhes", listLoaiGhe);
+		model.addAttribute("message", message);
 		return "admin/themCaChieu";
 	}
 	@RequestMapping(value="taoCaChieu", method = RequestMethod.POST)
@@ -116,11 +118,11 @@ public class adminCaChieuCtrl {
 	        // Save the new CaChieu object to the database
 	        session.save(newCaChieu);
 	        t.commit();
-//            model.addAttribute("message", "Cập nhật thành công!");
+            model.addAttribute("message", "Thêm Ca Chiếu thành công!");
 	        // Redirect to the 'themCaChieu' page after successful creation
 	    } catch (Exception e) {
 	        t.rollback();
-//	        model.addAttribute("message", "Error creating showtime: " + e.getMessage());
+	        model.addAttribute("message", "Thêm ca chiếu thất bại: Lỗi " + e);
 	        e.printStackTrace();
 	    } finally {
 	        session.close();
@@ -130,7 +132,7 @@ public class adminCaChieuCtrl {
 	}
 	// trang update Ca Chiếu
 	@RequestMapping(value="updateCaChieu", method = RequestMethod.GET)
-	public String homeUpdateCaChieu(@RequestParam("maCaChieu") Integer maCaChieu, ModelMap model) {
+	public String homeUpdateCaChieu(@RequestParam("maCaChieu") Integer maCaChieu, ModelMap model,@ModelAttribute("message") String message) {
 		Session session = factory.openSession();
 		CaChieu cc = (CaChieu) session.get(CaChieu.class, maCaChieu);
 		model.addAttribute("cc", cc);
@@ -157,6 +159,7 @@ public class adminCaChieuCtrl {
 		model.addAttribute("loaiGhes", listVe);
 		model.addAttribute("caChieus", listCaChieu);
 		model.addAttribute("loaiGhes", listLoaiGhe);
+		model.addAttribute("message", message);
 		session.close();
 		return "admin/updateCaChieu";
 	}
@@ -193,11 +196,11 @@ public class adminCaChieuCtrl {
 	        // Save the new CaChieu object to the database
 	        session.update(cc);
 	        t.commit();
-//            model.addAttribute("message", "Cập nhật thành công!");
+            model.addAttribute("message", "Cập nhật thành công!");
 	        // Redirect to the 'themCaChieu' page after successful creation
 	    } catch (Exception e) {
 	        t.rollback();
-//	        model.addAttribute("message", "Error creating showtime: " + e.getMessage());
+	        model.addAttribute("message", "Cập nhật thất bại! Lỗi: " + e);
 	        e.printStackTrace();
 	    } finally {
 	        session.close();
@@ -222,15 +225,16 @@ public class adminCaChieuCtrl {
 	    	           .setParameter("maCaChieu", maCaChieu)
 	    	           .executeUpdate();
 	    	    t.commit();
+	    	    model.addAttribute("message", "Xóa ca chiếu thành công!");
+	    	}else {
+	    		model.addAttribute("message", "Không thể xóa ca Chiếu!");
 	    	}
 	        
-	        // Thông báo thành công
-	        // model.addAttribute("message", "Xóa ca chiếu thành công!");
 	    } catch (Exception e) {
 	        // Xảy ra lỗi, rollback transaction
 	        t.rollback();
 	        // Thông báo lỗi
-	        // model.addAttribute("message", "Xóa ca chiếu thất bại: " + e.getMessage());
+	        model.addAttribute("message", "Xóa ca chiếu thất bại: " + e);
 	    } finally {
 	        // Đóng session
 	        session.close();

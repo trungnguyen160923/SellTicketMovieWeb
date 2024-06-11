@@ -28,7 +28,7 @@ public class adminPhongCtrl {
 	
 	//Phòng Xem Phim
 	@RequestMapping("phong")
-	public String index(ModelMap model) {
+	public String index(ModelMap model,@ModelAttribute("message") String message) {
 		Session session = factory.openSession();
 		String hql = "FROM Phong";
 		String hqlLoaiPhong = "FROM LoaiPhong";
@@ -45,6 +45,7 @@ public class adminPhongCtrl {
 		model.addAttribute("phongs", list);
 		model.addAttribute("loaiPhongs", listLoaiPhong);
 		model.addAttribute("loaiGhes", listLoaiGhe);
+		model.addAttribute("message", message);
 		
 		return "admin/phong";
 	}
@@ -63,11 +64,10 @@ public class adminPhongCtrl {
 				
 				session.save(phong);
 				t.commit();
-//			model.addAttribute("message","Chỉnh sửa thành công!");
+			model.addAttribute("message","Thêm Phòng thành công!");
 		} catch (Exception e) {
 			t.rollback();
-			System.out.println(e);
-//			model.addAttribute("message" + e, "Chỉnh sửa thất bại!");
+			model.addAttribute("message", "Chỉnh sửa thất bại! Lỗi: "+ e);
 		}
 		finally {
 			session.close();
@@ -96,11 +96,10 @@ public class adminPhongCtrl {
 			
 			session.update(phong);
 			t.commit();
-//		model.addAttribute("message","Chỉnh sửa thành công!");
+			model.addAttribute("message","Cập nhật phòng thành công!");
 		} catch (Exception e) {
 			t.rollback();
-			System.out.println(e);
-	//		model.addAttribute("message" + e, "Chỉnh sửa thất bại!");
+			model.addAttribute("message", "Cập nhật phòng thất bại! Lỗi: " + e);
 		}
 		finally {
 			session.close();
@@ -123,13 +122,13 @@ public class adminPhongCtrl {
         	try {
     			session.delete(phong);
     			t.commit();
-				/* model.addAttribute("message","Xóa thành công!"); */
+				model.addAttribute("message","Xóa phòng thành công!");
     		} catch (Exception e) {
     			t.rollback();
-				/* model.addAttribute("message", "Xóa thất bại!" + e); */
+				model.addAttribute("message", "Xóa phòng thất bại! Lỗi: " + e);
     		}
         }else {
-        	// Thông báo không được xóa;
+        	model.addAttribute("message", "Không được xóa phòng do đã có lịch chiếu ở phòng này ");
         }
         session.close();
 		return "redirect:/admin/phong.htm";
@@ -137,7 +136,7 @@ public class adminPhongCtrl {
 	
 	// Chi tiết Phòng
 	@RequestMapping("chiTietPhong")
-	public String chiTietPhong(@RequestParam("maPhong") Integer maPhong, ModelMap model) {
+	public String chiTietPhong(@RequestParam("maPhong") Integer maPhong, ModelMap model,@ModelAttribute("message") String message) {
 		Session session = factory.openSession();
 		String hql = "FROM Phong p WHERE p.maPhong = :maPhong";
 		String hqlGhe = "FROM Ghe g WHERE g.phong.maPhong = :maPhong";
@@ -159,6 +158,7 @@ public class adminPhongCtrl {
 		model.addAttribute("phong", phong);
 		model.addAttribute("ghes", listGhes);
 		model.addAttribute("loaiGhes", listLoaiGhe);
+		model.addAttribute("message", message);
 		session.close();
 		
 		return "admin/chiTietPhong";
@@ -174,12 +174,14 @@ public class adminPhongCtrl {
 				ghe.setTrangThai(-1);
 				session.update(ghe);
 				t.commit();
-				/* model.addAttribute("message","Xóa thành công!"); */
+				model.addAttribute("message","Xóa ghế thành công!");
 			}
-			/* model.addAttribute("message","Không được xóa!"); */
+			else {
+				model.addAttribute("message","Không được xóa ghế do đã có người đặt ghế này!");
+			}
 		} catch (Exception e) {
 			t.rollback();
-			/* model.addAttribute("message", "Xóa thất bại!" + e); */
+			model.addAttribute("message", "Xóa ghế thất bại!" + e);
 		}finally {
 			session.close();
 		}
@@ -199,7 +201,7 @@ public class adminPhongCtrl {
 
 	        if (count > 0) {
 	            // Có ghế có trangThai = 1, không thể xóa
-	            //model.addAttribute("message", "Không thể xóa ghế. Có ghế đã được đặt.");
+	            model.addAttribute("message", "Không thể xóa ghế. Có ghế đã được đặt.");
 	        } else {
 	            // Xóa tất cả các ghế trong phòng này
 	            String hqlDelete = "DELETE FROM Ghe WHERE phong.maPhong = :maPhong";
@@ -207,11 +209,11 @@ public class adminPhongCtrl {
 	                   .setParameter("maPhong", maPhong)
 	                   .executeUpdate();
 	            t.commit();
-	            //model.addAttribute("message", "Xóa tất cả ghế thành công.");
+	            model.addAttribute("message", "Xóa tất cả ghế thành công.");
 	        }
 	    } catch (Exception e) {
 	        t.rollback();
-	       // model.addAttribute("message", "Có lỗi xảy ra khi xóa ghế.");
+	        model.addAttribute("message", "Có lỗi xảy ra khi xóa ghế. Lỗi: " + e);
 	        e.printStackTrace();
 	    } finally {
 	        session.close();
@@ -237,13 +239,16 @@ public class adminPhongCtrl {
 	                    ghe.setLoaiGhe(loaiGhe);
 	                    ghe.setTrangThai(trangThai);
 	                    session.update(ghe);
+	                    t.commit();
+	    	            model.addAttribute("message", "Cập nhật ghế thành công!");
+	                }else {
+	                	model.addAttribute("message", "Không thể xóa ghế. Có ghế đã được đặt.");
 	                }
 	            }
-	            t.commit();
-//	            model.addAttribute("message", "Cập nhật thành công!");
+	            
 	        } catch (Exception e) {
 	            t.rollback();
-//	            model.addAttribute("message", "Cập nhật thất bại!");
+	            model.addAttribute("message", "Cập nhật thất bại! Lỗi: " + e);
 	            e.printStackTrace();
 	        } finally {
 	            session.close();
@@ -285,11 +290,11 @@ public class adminPhongCtrl {
 	            
 	        }
 			t.commit();
-//            model.addAttribute("message", "Cập nhật thành công!");
+            model.addAttribute("message", "Thêm ghế thành công!");
 	    } catch (Exception e) {
 	        t.rollback();
 	        e.printStackTrace();
-//            model.addAttribute("message", "Cập nhật thất bại!");
+            model.addAttribute("message", "Thêm ghế thất bại! Lỗi: " + e);
 	    } finally {
 	        session.close();
 	    }
@@ -310,11 +315,11 @@ public class adminPhongCtrl {
 	    try {			
 				session.save(loaiPhong);
 				t.commit();
-	//		model.addAttribute("message","Chỉnh sửa thành công!");
+				model.addAttribute("message","Thêm loại phòng thành công!");
 		} catch (Exception e) {
 			t.rollback();
 			System.out.println(e);
-	//		model.addAttribute("message" + e, "Chỉnh sửa thất bại!");
+			model.addAttribute("message" + e, "Chỉnh sửa thất bại! Lỗi:" + e);
 		}
 		finally {
 			session.close();
@@ -323,7 +328,7 @@ public class adminPhongCtrl {
 	}
 	// Update Loại Phòng
 	@RequestMapping("updateLoaiPhong")
-	public String updateLoaiPhong(@RequestParam("maLoaiPhong") Integer maLoaiPhong,
+	public String updateLoaiPhong(ModelMap model,@RequestParam("maLoaiPhong") Integer maLoaiPhong,
 			@RequestParam("trangThai") Integer trangThai,
 			@RequestParam("tenLoaiPhong") String tenLoaiPhong) {
 		Session session = factory.openSession();
@@ -339,15 +344,14 @@ public class adminPhongCtrl {
 		    	loaiPhong.setTenLoaiPhong(tenLoaiPhong);
 				session.update(loaiPhong);
 				t.commit();
-//				model.addAttribute("message","Chỉnh sửa thành công!");
+				model.addAttribute("message","Chỉnh sửa thành công!");
 	    	}else {
-//	    		model.addAttribute("message","Chỉnh sửa thất bại!");
+	    		model.addAttribute("message","Không tìm thấy phòng, thử lại! Lỗi");
 	    	}
 
 	} catch (Exception e) {
 		t.rollback();
-		System.out.println(e);
-//		model.addAttribute("message" + e, "Chỉnh sửa thất bại!");
+		model.addAttribute("message", "Chỉnh sửa thất bại! Lỗi: " + e);
 	}
 	finally {
 		session.close();
@@ -356,7 +360,7 @@ public class adminPhongCtrl {
 	}
 	// Xóa Loại Phòng
 	@RequestMapping("deleteLoaiPhong")
-	public String deleteLoaiPhong(@RequestParam("maLoaiPhong") Integer maLoaiPhong) {
+	public String deleteLoaiPhong(ModelMap model,@RequestParam("maLoaiPhong") Integer maLoaiPhong) {
 		Session session = factory.openSession();
 	    Transaction t = session.beginTransaction();
 	    try {
@@ -365,9 +369,9 @@ public class adminPhongCtrl {
                    .setParameter("maLoaiPhong", maLoaiPhong)
                    .executeUpdate();
             t.commit();
-//			model.addAttribute("message","Chỉnh sửa thành công!");
+			model.addAttribute("message","Xóa loại phòng thành công!");
 		} catch (Exception e) {
-//			model.addAttribute("message" + e, "Chỉnh sửa thất bại!");
+			model.addAttribute("message", "Xóa loại phòng thất bại!");
 			// TODO: handle exception
 			t.rollback();
 		}
@@ -376,20 +380,21 @@ public class adminPhongCtrl {
 	// Thêm Loại Ghế
 	@RequestMapping("addLoaiGhe")
 	public String addLoaiGhe(@RequestParam("tenLoaiGhe") String tenLoaiGhe,
+			@RequestParam("giaGhe") double giaGhe,
 			ModelMap model) {
 		Session session = factory.openSession();
 	    Transaction t = session.beginTransaction();
 	    LoaiGhe loaiGhe = new LoaiGhe();
 	    loaiGhe.setTenLoaiGhe(tenLoaiGhe);
+	    loaiGhe.setGiaGhe(giaGhe);
 	    loaiGhe.setTrangThai(true);
 	    try {			
 				session.save(loaiGhe);
 				t.commit();
-	//		model.addAttribute("message","Chỉnh sửa thành công!");
+				model.addAttribute("message","Thêm loại ghế thành công!");
 		} catch (Exception e) {
 			t.rollback();
-			System.out.println(e);
-	//		model.addAttribute("message" + e, "Chỉnh sửa thất bại!");
+			model.addAttribute("message", "Thêm loại ghế thất bại! Lỗi: " + e);
 		}
 		finally {
 			session.close();
@@ -398,8 +403,9 @@ public class adminPhongCtrl {
 	}
 	// Update Loại Ghế
 	@RequestMapping("updateLoaiGhe")
-	public String updateLoaiGhe(@RequestParam("maLoaiGhe") Integer maLoaiGhe,
+	public String updateLoaiGhe(ModelMap model,@RequestParam("maLoaiGhe") Integer maLoaiGhe,
 			@RequestParam("trangThai") Integer trangThai,
+			@RequestParam("giaGhe") double giaGhe,
 			@RequestParam("tenLoaiGhe") String tenLoaiGhe) {
 		Session session = factory.openSession();
 	    Transaction t = session.beginTransaction();
@@ -412,17 +418,17 @@ public class adminPhongCtrl {
 		    		loaiGhe.setTrangThai(false);
 		    	}
 		    	loaiGhe.setTenLoaiGhe(tenLoaiGhe);
+		    	loaiGhe.setGiaGhe(giaGhe);
 				session.update(loaiGhe);
 				t.commit();
-//				model.addAttribute("message","Chỉnh sửa thành công!");
+				model.addAttribute("message","Chỉnh sửa thành công!");
 	    	}else {
-//	    		model.addAttribute("message","Chỉnh sửa thất bại!");
+	    		model.addAttribute("message","Không tìm thấy loại ghê! Thử lại ");
 	    	}
 
 	} catch (Exception e) {
 		t.rollback();
-		System.out.println(e);
-//		model.addAttribute("message" + e, "Chỉnh sửa thất bại!");
+		model.addAttribute("message" , "Chỉnh sửa thất bại! Lỗi: " + e);
 	}
 	finally {
 		session.close();
@@ -431,7 +437,7 @@ public class adminPhongCtrl {
 	}
 	// Xóa Loại Ghế
 		@RequestMapping("deleteLoaiGhe")
-		public String deleteLoaiGhe(@RequestParam("maLoaiGhe") Integer maLoaiGhe) {
+		public String deleteLoaiGhe(ModelMap model,@RequestParam("maLoaiGhe") Integer maLoaiGhe) {
 			Session session = factory.openSession();
 		    Transaction t = session.beginTransaction();
 		    try {
@@ -441,9 +447,9 @@ public class adminPhongCtrl {
 	                   .executeUpdate();
 	            
 	            t.commit();
-//				model.addAttribute("message","Chỉnh sửa thành công!");
+				model.addAttribute("message","Xóa Loại Ghế thành công!");
 			} catch (Exception e) {
-//				model.addAttribute("message" + e, "Chỉnh sửa thất bại!");
+				model.addAttribute("message", "Xóa Loại Ghế thất bại! Lỗi: " + e);
 				// TODO: handle exception
 				t.rollback();
 			}

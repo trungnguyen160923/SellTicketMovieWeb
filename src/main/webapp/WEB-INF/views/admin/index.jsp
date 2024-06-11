@@ -44,6 +44,7 @@
 </style>
 </head>
 <body>
+		
 	 <div class="container-sm">
         <header class="navbar navbar-expand-lg navbar-light col" style="margin-bottom: 4.5rem;">
             <div class="container-fluid">
@@ -70,9 +71,11 @@
               </div>
             <button class="btn btn-info" style="width: 150px; height:50px;border-radius: 15px; color:aliceblue">Đăng Xuất</button>
         </header>
+        
         <main class="table col listPhim_table" id="customers_table" phims = "${phims}">
             <section class="table__header">
                 <h2>Danh Sách Phim</h2>
+                 
                 <div class="input-group">
                     <input type="search" style="height:40px; border-radius:20px" placeholder="Tìm Kiếm...">
                     
@@ -141,7 +144,7 @@
                 <button type="button" class="custom-close-btn" data-bs-dismiss="modal" aria-label="Close">&times;</button>
             </div>
             <div class="modal-body">
-            <form class="form_film" method="POST" action="admin/updatePhim.htm" enctype="application/x-www-form-urlencoded">
+            <form class="form_film" method="POST" action="admin/updatePhim.htm" enctype="application/x-www-form-urlencoded" onsubmit="return validateForm()">
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="maPhim" class="form-label">Mã Phim:</label>
@@ -149,31 +152,31 @@
                         </div>
                         <div class="col-md-6">
                             <label for="tenPhim" class="form-label">Tên Phim:</label>
-                            <input type="text" class="form-control" id="tenPhim" name="tenPhim" value="${p.tenPhim}" readonly>
+                            <input type="text" class="form-control" id="tenPhim" name="tenPhim" value="${p.tenPhim}" readonly required>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="trailer" class="form-label">Trailer:</label>
-                            <input type="text" class="form-control" id="trailer" name="trailer" value="${p.trailer}" readonly>
+                            <input type="text" class="form-control" id="trailer" name="trailer" value="${p.trailer}" readonly required>
                         </div>
                         <div class="col-md-6">
-                            <label for="thoiLuong" class="form-label">Thời Lượng:</label>
-                            <input type="text" class="form-control" id="thoiLuong" name="thoiLuong" value="${p.thoiLuong}" readonly>
+                            <label for="thoiLuong" class="form-label">Thời Lượng(Phút):</label>
+                            <input type="number" class="form-control" id="thoiLuong" name="thoiLuong" value="${p.thoiLuong}" readonly required>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="moTa" class="form-label">Mô Tả:</label>
-                        <textarea class="form-control" id="moTa" rows="3" name="moTa" readonly>${p.moTa}</textarea>
+                        <textarea class="form-control" id="moTa" rows="3" name="moTa" required readonly>${p.moTa}</textarea>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="luotXem" class="form-label">Lượt Xem:</label>
-                            <input type="text" class="form-control" id="luotXem" name="luotXem" value="${p.luotXem}" readonly>
+                            <input type="text" class="form-control" id="luotXem" name="luotXem" value="${p.luotXem}"readonly required>
                         </div>
                         <div class="col-md-6">
                             <label for="luotThich" class="form-label">Lượt Thích:</label>
-                            <input type="text" class="form-control" id="luotThich" name="luotThich" value="${p.luotThich}" readonly>
+                            <input type="text" class="form-control" id="luotThich" name="luotThich" value="${p.luotThich}"readonly required>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -187,33 +190,33 @@
                         </div>
                         <div class="col-md-6">
                             <label for="ngonNgu" class="form-label">Ngôn Ngữ:</label>
-                            <input type="text" class="form-control" id="ngonNgu" name="ngonNgu" value="${p.ngonNgu}" readonly>
+                            <input type="text" class="form-control" id="ngonNgu" name="ngonNgu" value="${p.ngonNgu}" required readonly>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="phuDe" class="form-label">Phụ Đề:</label>
-                            <input type="text" class="form-control" id="phuDe" name="phuDe" value="${p.phuDe}" readonly>
+                            <input type="text" class="form-control" id="phuDe" name="phuDe" value="${p.phuDe}" required readonly>
                         </div>
                         <div class="col-md-6">
                             <label for="gioiHanTuoi" class="form-label">Giới Hạn Tuổi:</label>
-                            <input type="text" class="form-control" id="gioiHanTuoi" name="gioiHanTuoi" value="${p.gioiHanTuoi}" readonly>
+                            <input type="text" class="form-control" id="gioiHanTuoi" name="gioiHanTuoi" value="${p.gioiHanTuoi}" required readonly>
                         </div>
                     </div>
                     <div class="row mb-3">
 					    <div class="col-md-6">
 					        <label for="ngayHieuLucTu" class="form-label">Ngày Hiệu Lực Từ:</label>
-					        <input type="date" class="form-control" id="ngayHieuLucTu" name="ngayHieuLucTu" placeholder="mm/dd/yyyy"  value="${p.ngayHieuLucTu}" readonly>
+					        <input type="date" class="form-control" id="ngayHieuLucTu" name="ngayHieuLucTu" placeholder="mm/dd/yyyy"  value="${p.ngayHieuLucTu}" required readonly>
 					    </div>
 					    <div class="col-md-6">
 					        <label for="ngayHieuLucDen" class="form-label">Ngày Hiệu Lực Đến:</label>
-					        <input type="date" class="form-control" id="ngayHieuLucDen" name ="ngayHieuLucDen" placeholder="mm/dd/yyyy" value="${p.ngayHieuLucDen}" readonly>
+					        <input type="date" class="form-control" id="ngayHieuLucDen" name ="ngayHieuLucDen" placeholder="mm/dd/yyyy" value="${p.ngayHieuLucDen}" required readonly>
 					    </div>
 					</div>
 					 <div class="mb-3" >
 					    <label for="anhBia" class="form-label">Ảnh Bìa:</label>
 					    <img src="${p.anhBia}" style="height:1000px" alt="Ảnh Bìa" class="img-fluid mb-2" id="currentAnhBia">
-					    <input type="file" class="form-control" id="anhBia" name ="anhBia" accept="image/*" style="display: none;">
+					    <input type="text" class="form-control" id="anhBia" name ="anhBia" accept="image/*" style="display: none; " value="${p.anhBia}">
 					</div>
 					
 					
@@ -254,7 +257,7 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="thoiLuong" class="form-label">Thời Lượng (phút):</label>
-                            <input type="text" class="form-control" id="thoiLuong" name="thoiLuong" required>
+                            <input type="number" class="form-control" id="thoiLuong" name="thoiLuong" required>
                         </div>
                         <div class="col-md-6">
                             <label for="ngonNgu" class="form-label">Ngôn Ngữ:</label>
@@ -287,7 +290,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="anhBia" class="form-label">Ảnh Bìa:</label>
-                        <input type="file" class="form-control" id="anhBia" name="anhBia" accept="image/*" required>
+                        <input type="text" class="form-control" id="anhBia" name="anhBia" required>
                     </div>
                     <div class="mb-3">
                         <label for="trangThai" class="form-label">Trạng Thái:</label>
@@ -327,6 +330,14 @@
 		    </div>
 		</div>
           </c:forEach>
+          
+     <!--Thông báo  -->
+        <c:if test="${not empty message}">
+                    <script>
+                        alert("${message}");
+                    </script>
+         		</c:if>
+        <!--End Thông báo  -->    
     <!--End Model Youtube  -->
     <!--Phần script  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -337,6 +348,9 @@
        console.log(movie);
         
     } */
+    
+    
+    
     document.addEventListener('DOMContentLoaded', function() {   
         var phims = [
             <c:forEach items="${phims}" var="phim" varStatus="loop">
@@ -368,6 +382,15 @@
             const cancelButton = modal.querySelector('.modal-footer .btn-secondary');
             const closeButton = modal.querySelector('.modal-header .custom-close-btn');
             const trangThai = modal.querySelector('#trangThai');
+            const updateFormPhim = modal.querySelector('.form_film');
+            updateFormPhim.addEventListener('submit', function(event) {
+    	        // Perform form validation or other actions before submitting
+    	        if (!updateFormPhim.checkValidity()) {
+    	            event.preventDefault();
+    	            event.stopPropagation();
+    	        }
+    	        updateFormPhim.classList.add('was-validated');
+    	    }, false);
             
 
             function resetFormState() {

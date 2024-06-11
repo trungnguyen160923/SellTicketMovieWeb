@@ -470,6 +470,13 @@
     </div>
 </div>
 <!--End Modal Thêm Ghế  -->
+<!--Thông báo  -->
+        <c:if test="${not empty message}">
+                    <script>
+                        alert("${message}");
+                    </script>
+         		</c:if>
+        <!--End Thông báo  -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
 </script>

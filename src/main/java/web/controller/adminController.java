@@ -26,12 +26,13 @@ public class adminController {
 	
 	// Trang Chủ Admin
 	@RequestMapping("index")
-	public String index(ModelMap model) {
+	public String index(ModelMap model,@ModelAttribute("message") String message) {
 		Session session = factory.openSession();
 		String hql = "FROM Phim";
 		Query query = session.createQuery(hql);
 		List<Phim> list = query.list();
 		model.addAttribute("phims", list);
+		model.addAttribute("message", message);
 		return "admin/index";
 	}
 	
@@ -40,6 +41,7 @@ public class adminController {
 	public String addPhim(ModelMap model,@ModelAttribute("phim") Phim phim) {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
+		
 		try {
 			String newUrl = getUrlYoutube(phim.getTrailer());
 			if(newUrl !=  null) {
@@ -50,11 +52,11 @@ public class adminController {
 				t.rollback();
 			}
 			
-//			model.addAttribute("message","Chỉnh sửa thành công!");
+			model.addAttribute("message","Thêm bộ phim thành công!");
 		} catch (Exception e) {
 			t.rollback();
 			System.out.println(e);
-//			model.addAttribute("message" + e, "Chỉnh sửa thất bại!");
+			model.addAttribute("message", "Thêm bộ phim thất bại! Lỗi:" + e);
 		}
 		finally {
 			session.close();
@@ -72,11 +74,11 @@ public class adminController {
 			phim.setTrailer(newUrl);
 			session.update(phim);
 			t.commit();
-//			model.addAttribute("message","Chỉnh sửa thành công!");
+			model.addAttribute("message","Cập nhật thành công!");
 		} catch (Exception e) {
 			t.rollback();
 			System.out.println(e);
-//			model.addAttribute("message" + e, "Chỉnh sửa thất bại!");
+			model.addAttribute("message" , "Chỉnh sửa thất bại! Lỗi " + e);
 		}
 		finally {
 			session.close();
@@ -99,13 +101,13 @@ public class adminController {
         	try {
     			session.delete(phim);
     			t.commit();
-				/* model.addAttribute("message","Xóa thành công!"); */
+				model.addAttribute("message","Xóa thành công!");
     		} catch (Exception e) {
     			t.rollback();
-				/* model.addAttribute("message", "Xóa thất bại!" + e); */
+				model.addAttribute("message", "Xóa thất bại! Lỗi: " + e);
     		}
         }else {
-        	// Thông báo không được xóa;
+        	model.addAttribute("message", "Không được xóa phim này do đã sắp lịch chiếu: ");
         }
         session.close();
 		return "redirect:/admin/index.htm";

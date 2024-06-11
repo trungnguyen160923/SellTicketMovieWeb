@@ -227,6 +227,7 @@
                                 <tr>
                                     <th>Mã loại ghế</th>
                                     <th>Tên loại ghế</th>
+                                    <th>Giá Ghế</th>
                                     <th>Mô tả</th>
                                     <th>Action</th>
                                 </tr>
@@ -236,6 +237,7 @@
                                 <tr>
                                     <td>${lg.maLoaiGhe}</td>
                                     <td>${lg.tenLoaiGhe}</td>
+                                    <td>${lg.giaGhe}</td>
                                     <td>
 									    <c:choose>
 									        <c:when test="${lg.trangThai}">
@@ -446,7 +448,11 @@
                     <div class="mb-3">
                             <label for="tenLoaiGhe" class="form-label">Tên Loại Ghế:</label>
                             <input type="text" class="form-control" id="tenLoaiGhe" name="tenLoaiGhe" required>
-                    </div>               
+                    </div>  
+                    <div class="mb-3">
+                            <label for="giaGhe" class="form-label">Giá Loại Ghế:</label>
+                            <input type="number" class="form-control" id="giaGhe" name="giaGhe" required>
+                    </div>              
                 </form>
             </div>
             <div class="modal-footer">
@@ -463,7 +469,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header custom-modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Thêm Loại Ghe</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Thêm Loại Ghế</h5>
                 <button type="button" class="custom-close-btn btn_exit_addphim" data-bs-dismiss="modal" aria-label="Close">&times;</button>
             </div>
             <div class="modal-body">
@@ -490,6 +496,10 @@
 						            </c:if>
 						        >Không Sử Dụng</option>
 						</select>
+                    </div>
+                    <div class="mb-3">
+                            <label for="giaGhe" class="form-label">Giá Loại Ghế:</label>
+                            <input type="number" class="form-control" id="giaGhe" name="giaGhe" value="${lp.giaGhe}" required>
                     </div>             
                 </form>
             </div>
@@ -502,6 +512,13 @@
 </div>
 </c:forEach>
     <!--End modal sửa loại Ghế  -->
+    <!--Thông báo  -->
+        <c:if test="${not empty message}">
+                    <script>
+                        alert("${message}");
+                    </script>
+         		</c:if>
+        <!--End Thông báo  --> 
     <!--Phần script  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
