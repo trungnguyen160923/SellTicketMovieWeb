@@ -26,11 +26,11 @@ body {
 .main-div {
 	background: #ffffff none repeat scroll 0 0;
 	border-radius: 10px;
-	margin: auto; 
+	margin: auto;
 	max-width: 400px;
 	padding: 45px 40px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	margin-bottom:40px;
+	margin-bottom: 40px;
 }
 
 h2 {
@@ -70,16 +70,18 @@ h2 {
 .login-form .btn:hover {
 	background: #ec971f;
 }
-.option{
-	padding-top:30px;
+
+.option {
+	padding-top: 30px;
 }
+
 .footer {
 	bottom: 0;
 }
 </style>
 </head>
 <body>
-	<section>
+	<div>
 		<div class="container">
 			<div class="padding-top padding-bottom">
 				<div class="login-form">
@@ -108,7 +110,9 @@ h2 {
 								</script>
 							</c:if>
 							<c:if test="${not empty message}">
-								<div class="alert alert-success">${message}</div>
+								<script>
+									alert("${message}");
+								</script>
 							</c:if>
 						</form:form>
 						<div class="option">
@@ -120,7 +124,7 @@ h2 {
 				</div>
 			</div>
 		</div>
-	</section>
+	</div>
 	<jsp:include page="/WEB-INF/views/footer.jsp" />
 	<script>
 		function validateForm() {

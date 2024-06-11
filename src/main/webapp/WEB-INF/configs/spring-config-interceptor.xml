@@ -16,22 +16,10 @@
 
 	<!-- Cấu hình interceptor --> 
 	<mvc:interceptors>  
-		
-		<!-- Chỉ lọc các URL theo path
-		<mvc:interceptor>
-			<mvc:mapping path="/home/**"/>
-			<mvc:exclude-mapping path="/home/index.htm"/>
-			<bean class="poly.interceptor.LoggerInterceptor" />
-		</mvc:interceptor>
-		 -->
+
 		 <mvc:interceptor>
-<!-- 		 	<mvc:mapping path="/admin/**"/>
-			<mvc:mapping path="/user/**"/> -->
-			<mvc:mapping path="/order/**"/>
-			<mvc:exclude-mapping path="/user/login.htm"/>
-			<mvc:exclude-mapping path="/user/register.htm"/>
-			<mvc:exclude-mapping path="/user/forgot-password.htm"/>
-			<mvc:exclude-mapping path="/user/activate.htm"/>
+		 	<mvc:mapping path="/admin/**"/>
+			<mvc:mapping path="/user/**"/>
 			<bean class="web.interceptor.LoggerInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

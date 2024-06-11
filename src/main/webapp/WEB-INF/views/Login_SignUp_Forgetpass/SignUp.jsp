@@ -7,10 +7,8 @@
 
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>PenguTicket</title>
-<base href="${pageContext.servletContext.contextPath}/*">
 <style>
 body {
 	font-family: Arial, sans-serif;
@@ -20,9 +18,14 @@ body {
 }
 
 .account-section {
-	background: url('./assets/images/account/login.jpg') no-repeat
-		center center/cover;
-	padding: 40px 0;
+	background: url('./assets/images/account/login.jpg') no-repeat center
+		center/cover;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	justify-content: center;
+	align-items: center;
 }
 
 .container {
@@ -32,7 +35,7 @@ body {
 
 .account-area {
 	background: white;
-	padding: 40px;
+	padding: 10px 40px 20px 40px;
 	border-radius: 10px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -106,13 +109,6 @@ body {
 	color: #155724;
 }
 
-.toggle-password {
-	position: absolute;
-	right: 5px;
-	top: 35px;
-	cursor: pointer;
-}
-
 .login {
 	text-align: center;
 	margin-top: 20px;
@@ -126,106 +122,124 @@ body {
 .login a:hover {
 	text-decoration: underline;
 }
+
+.btn {
+	background: #f0ad4e;
+	color: #ffffff;
+	font-size: 16px;
+	width: 100%;
+	height: 50px;
+	padding: 0;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background 0.3s ease;
+}
+
+.btn:hover {
+	background: #ec971f;
+}
+
+.footer {
+	bottom: 0;
+}
 </style>
 </head>
 
 <body>
-	<section class="account-section bg_img"
-		data-background="./assets/images/account/login.jpg">
+	<div class="account-section">
 		<div class="container">
-			<div class="padding-top padding-bottom">
-				<div class="account-area">
-					<div class="section-header-3">
-						<h2 class="title">SellingTicket</h2>
-					</div>
-					<form:form class="account-form"
-						action="${pageContext.request.contextPath}/check-signup.htm"
-						method="post" onsubmit="return validateForm()"
-						modelAttribute="taikhoan">
-						<div class="row">
-							<div class="form-group row1">
-								<div class="col-md-6 group">
-									<label for="fullname">Tên đầy đủ<span>*</span></label>
-									<form:input type="text" placeholder="Nhập họ và tên của bạn"
-										id="fullname" path="hoTen" class="form-control" />
-									<div id="fullname-error" class="error-message"></div>
-								</div>
-								<div class="col-md-6 group">
-									<label for="address">Địa chỉ<span>*</span></label>
-									<form:input type="text" placeholder="Nhập địa chỉ của bạn"
-										id="address" path="diaChi" class="form-control" />
-									<div id="address-error" class="error-message"></div>
-								</div>
+			<div class="account-area">
+				<div class="section-header-3">
+					<h2 class="title">SellingTicket</h2>
+				</div>
+				<form:form class="account-form"
+					action="${pageContext.request.contextPath}/check-signup.htm"
+					method="post" modelAttribute="taikhoan"
+					onsubmit="return validateForm()">
+					<div class="row">
+						<div class="form-group row1">
+							<div class="col-md-6 group">
+								<label for="fullname">Tên đầy đủ<span>*</span></label>
+								<form:input type="text" placeholder="Nhập họ và tên của bạn"
+									id="fullname" path="hoTen" class="form-control" />
+								<div id="fullname-error" class="error-message"></div>
 							</div>
-							<div class="form-group row1">
-								<div class="col-md-6 group">
-									<label for="email">Email<span>*</span></label>
-									<form:input type="email" placeholder="Nhập email của bạn"
-										id="email" path="email" class="form-control" />
-									<div id="email-error" class="error-message"></div>
-								</div>
-								<div class="col-md-6 group">
-									<label for="phone">Điện thoại<span>*</span></label>
-									<form:input type="text"
-										placeholder="Nhập số điện thoại của bạn" id="phone" path="sdt"
-										class="form-control" />
-									<div id="phone-error" class="error-message"></div>
-								</div>
-							</div>
-							<div class="form-group row1">
-								<div class="col-md-6 group">
-									<label for="birthdate">Ngày sinh<span>*</span></label>
-									<form:input type="date"
-										placeholder="Nhập theo định dạng DD/MM/YYYY" id="birthdate"
-										path="ngaySinh" class="form-control" />
-								</div>
-								<div class="col-md-6">
-									<label for="gender">Giới tính<span>*</span></label>
-									<form:select id="gender" path="gioiTinh" class="form-control">
-										<form:option value="Nam">Nam</form:option>
-										<form:option value="Nữ">Nữ</form:option>
-									</form:select>
-									<div id="gender-error" class="error-message"></div>
-								</div>
-							</div>
-							<div class="form-group row1">
-								<div class="col-md-6 group">
-									<label for="password">Mật khẩu<span>*</span></label>
-									<form:input type="password" placeholder="Nhập mật khẩu của bạn"
-										id="password" path="matKhau" class="form-control" />
-									<i class="gg-eye toggle-password"
-										onclick="togglePassword('password')"></i>
-									<div id="password-error" class="error-message"></div>
-								</div>
-								<div class="col-md-6 group">
-									<label for="passwordConfirm">Xác nhận mật khẩu<span>*</span></label>
-									<input type="password"
-										placeholder="Xác nhận lại mật khẩu của bạn"
-										id="passwordConfirm" name="passwordConfirm"
-										class="form-control" /> <i class="gg-eye toggle-password"
-										onclick="togglePassword('passwordConfirm')"></i>
-									<div id="passwordConfirm-error" class="error-message"></div>
-								</div>
+							<div class="col-md-6 group">
+								<label for="address">Địa chỉ<span>*</span></label>
+								<form:input type="text" placeholder="Nhập địa chỉ của bạn"
+									id="address" path="diaChi" class="form-control" />
+								<div id="address-error" class="error-message"></div>
 							</div>
 						</div>
-						<div class="form-group text-center">
-							<input type="submit" value="Đăng ký" class="btn btn-primary">
+						<div class="form-group row1">
+							<div class="col-md-6 group">
+								<label for="email">Email<span>*</span></label>
+								<form:input type="email" placeholder="Nhập email của bạn"
+									id="email" path="email" class="form-control" />
+								<div id="email-error" class="error-message"></div>
+							</div>
+							<div class="col-md-6 group">
+								<label for="phone">Điện thoại<span>*</span></label>
+								<form:input type="text" placeholder="Nhập số điện thoại của bạn"
+									id="phone" path="sdt" class="form-control" />
+								<div id="phone-error" class="error-message"></div>
+							</div>
 						</div>
-						<c:if test="${not empty error}">
-							<div class="alert alert-danger">${error}</div>
-						</c:if>
-						<c:if test="${not empty message}">
-							<div class="alert alert-success">${message}</div>
-						</c:if>
-					</form:form>
-					<div class="login">
-						Bạn đã có tài khoản PenguTicket? <a
-							href="${pageContext.request.contextPath}/login.htm">Đăng nhập</a>
+						<div class="form-group row1">
+							<div class="col-md-6 group">
+								<label for="birthdate">Ngày sinh<span>*</span></label>
+								<form:input type="date"
+									placeholder="Nhập theo định dạng DD/MM/YYYY" id="birthdate"
+									path="ngaySinh" class="form-control" />
+								<div id="birthdate-error" class="error-message"></div>
+							</div>
+							<div class="col-md-6 group">
+								<label for="gender">Giới tính<span>*</span></label>
+								<form:select id="gender" path="gioiTinh" class="form-control">
+									<form:option value="Nam">Nam</form:option>
+									<form:option value="Nữ">Nữ</form:option>
+								</form:select>
+								<div id="gender-error" class="error-message"></div>
+							</div>
+						</div>
+						<div class="form-group row1">
+							<div class="col-md-6 group">
+								<label for="password">Mật khẩu<span>*</span></label>
+								<form:input type="password" placeholder="Nhập mật khẩu của bạn"
+									id="password" path="matKhau" class="form-control" />
+								<div id="password-error" class="error-message"></div>
+							</div>
+							<div class="col-md-6 group">
+								<label for="passwordConfirm">Xác nhận mật khẩu<span>*</span></label>
+								<input type="password"
+									placeholder="Xác nhận lại mật khẩu của bạn"
+									id="passwordConfirm" name="passwordConfirm"
+									class="form-control" />
+								<div id="passwordConfirm-error" class="error-message"></div>
+							</div>
+						</div>
 					</div>
+					<div class="form-group text-center">
+						<input type="submit" value="Đăng ký" class="btn">
+					</div>
+					<c:if test="${not empty error}">
+						<script>
+							alert("${error}");
+						</script>
+					</c:if>
+					<c:if test="${not empty message}">
+						<script>
+							alert("${message}");
+						</script>
+					</c:if>
+				</form:form>
+				<div class="login">
+					Bạn đã có tài khoản PenguTicket? <a
+						href="${pageContext.request.contextPath}/login.htm">Đăng nhập</a>
 				</div>
 			</div>
 		</div>
-	</section>
+	</div>
 	<jsp:include page="/WEB-INF/views/footer.jsp" />
 	<script>
 		function validateForm() {
@@ -248,7 +262,7 @@ body {
 					.getElementById("passwordConfirm-error");
 			var valid = true;
 
-			if (fullname === "") {
+			if (fullname.trim() === "") {
 				fullnameError.innerText = "Tên đầy đủ không được để trống.";
 				fullnameError.style.display = "block";
 				valid = false;
@@ -260,7 +274,7 @@ body {
 				fullnameError.style.display = "none";
 			}
 
-			if (address === "") {
+			if (address.trim() === "") {
 				addressError.innerText = "Địa chỉ không được để trống.";
 				addressError.style.display = "block";
 				valid = false;
@@ -268,7 +282,7 @@ body {
 				addressError.style.display = "none";
 			}
 
-			if (phone === "") {
+			if (phone.trim() === "") {
 				phoneError.innerText = "Số điện thoại không được để trống.";
 				phoneError.style.display = "block";
 				valid = false;
@@ -284,7 +298,7 @@ body {
 				phoneError.style.display = "none";
 			}
 
-			if (email === "") {
+			if (email.trim() === "") {
 				emailError.innerText = "Email không được để trống.";
 				emailError.style.display = "block";
 				valid = false;
@@ -296,7 +310,7 @@ body {
 				emailError.style.display = "none";
 			}
 
-			if (birthdate === "") {
+			if (birthdate.trim() === "") {
 				birthdateError.innerText = "Ngày sinh không được để trống.";
 				birthdateError.style.display = "block";
 				valid = false;
@@ -304,7 +318,7 @@ body {
 				birthdateError.style.display = "none";
 			}
 
-			if (gender === "") {
+			if (gender.trim() === "") {
 				genderError.innerText = "Giới tính không được để trống.";
 				genderError.style.display = "block";
 				valid = false;
@@ -343,23 +357,8 @@ body {
 			} else {
 				passwordConfirmError.style.display = "none";
 			}
-			return false;
-		}
-
-		function togglePassword(id) {
-			var input = document.getElementById(id);
-			var icon = input.nextElementSibling;
-			if (input.type === "password") {
-				input.type = "text";
-				icon.classList.remove('gg-eye');
-				icon.classList.add('gg-eye-alt');
-			} else {
-				input.type = "password";
-				icon.classList.remove('gg-eye-alt');
-				icon.classList.add('gg-eye');
-			}
+			return valid;
 		}
 	</script>
 </body>
-
 </html>
