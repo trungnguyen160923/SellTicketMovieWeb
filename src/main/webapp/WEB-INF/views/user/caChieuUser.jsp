@@ -42,7 +42,7 @@
 						<li class="nav-item"><a class="nav-link"
 							href="user/caChieuUser.htm">Lịch chiếu</a></li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">Thanh toán</a>
+                      <a class="nav-link" href="user/thanhToan.htm">Thanh toán</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="lienHe.htm">Thông tin cá nhân</a>
