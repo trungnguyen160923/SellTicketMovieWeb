@@ -150,7 +150,7 @@ body {
 		<div class="container">
 			<div class="account-area">
 				<div class="section-header-3">
-					<h2 class="title">SellingTicket</h2>
+					<h2 class="title">Pengu Ticket</h2>
 				</div>
 				<form:form class="account-form"
 					action="${pageContext.request.contextPath}/check-signup.htm"
@@ -260,6 +260,9 @@ body {
 			var passwordError = document.getElementById("password-error");
 			var passwordConfirmError = document
 					.getElementById("passwordConfirm-error");
+			var birthdate = document.getElementById("birthdate").value;
+			var birthdateError = document.getElementById("birthdate-error");
+
 			var valid = true;
 
 			if (fullname.trim() === "") {
@@ -316,6 +319,23 @@ body {
 				valid = false;
 			} else {
 				birthdateError.style.display = "none";
+			}
+			
+			if (birthdate.trim() !== "") {
+				var today = new Date();
+				var birthDate = new Date(birthdate);
+				var age = today.getFullYear() - birthDate.getFullYear();
+				var monthDiff = today.getMonth() - birthDate.getMonth();
+				if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+					age--;
+				}
+				if (age < 16) {
+					birthdateError.innerText = "Bạn phải đủ 16 tuổi để đăng ký.";
+					birthdateError.style.display = "block";
+					valid = false;
+				} else {
+					birthdateError.style.display = "none";
+				}
 			}
 
 			if (gender.trim() === "") {
