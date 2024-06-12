@@ -283,33 +283,42 @@ input {
 </head>
 <body>
 	<div class="container">
-		<header class="navbar navbar-expand-lg navbar-light col"
-			style="margin-bottom: 4.5rem;">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="#"><img
-					src="assets/images/logo/logo.png" alt="" class="mr-2">Pengu</a>
-				<button class="navbar-toggler" type="button"
-					data-bs-toggle="collapse" data-bs-target="#navbarNav"
-					aria-controls="navbarNav" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav">
-						<li class="nav-item"><a class="nav-link" aria-current="page"
-							href="user/home.htm">Trang chủ</a></li>
-						<li class="nav-item"><a class="nav-link"
-							href="user/thanhToan.htm">Thanh toán</a></li>
-					</ul>
+		<div class="row">
+			<header class="navbar navbar-expand-lg navbar-light col"
+				style="margin-bottom: 4.5rem;">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="#"><img
+						src="assets\images\logo\logo.png" alt="" class="mr-2">Pengu</a>
+					<button class="navbar-toggler" type="button"
+						data-bs-toggle="collapse" data-bs-target="#navbarNav"
+						aria-controls="navbarNav" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarNav">
+						<ul class="navbar-nav">
+							<li class="nav-item"><a class="nav-link" aria-current="page"
+								href="user/home.htm">Trang chủ</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="user/caChieuUser.htm">Lịch chiếu</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="user/thanhToan.htm">Thanh toán</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="${pageContext.servletContext.contextPath}/user/infor.htm">Thông
+									tin cá nhân</a></li>
+						</ul>
+					</div>
 				</div>
-			</div>
-			<form action="<c:url value='/logout.htm'/>" method="post">
-				<button type="submit" class="btn btn-info"
-					style="width: 150px; height: 50px; border-radius: 15px; color: aliceblue">Đăng
-					Xuất</button>
-			</form>
-		</header>
-		<div class="col-12">
+				<form action="<c:url value='/logout.htm'/>" method="post">
+					<button type="submit" class="btn btn-info"
+						style="width: 150px; height: 50px; border-radius: 15px; color: aliceblue">Đăng
+						Xuất</button>
+				</form>
+
+			</header>
+		</div>
+		<div class="col">
+			<div class="col-12">
 			<div class="center">
 				<div class="tickets">
 					<div class="ticket-selector">
@@ -347,7 +356,7 @@ input {
 						</div>
 						<div>
 							<form id="thanhToanForm" method="POST" action="thanhToan">
-								<button type="button" class="btn btn-primary btn_successModal"
+								<button type="button" class="btn btn-primary btn_successModal bookTicketBtn"
 									data-bs-toggle="modal" data-bs-target="#successModal">Xác
 									Nhận Đặt</button>
 							</form>
@@ -357,7 +366,8 @@ input {
 				</div>
 			</div>
 		</div>
-
+			
+		</div>
 
 		<!-- Modal -->
 		<div class="modal fade" id="successModal" tabindex="-1"
@@ -379,8 +389,17 @@ input {
 				</div>
 			</div>
 		</div>
+</div>
+<!--Form ảo để chọn ghế  -->
+<form class="chonGheForm" method="POST" action="user/chonGhe.htm" enctype="application/x-www-form-urlencoded">               
+                     <!-- Hidden input to store selected seat IDs -->
+                    <input type="hidden" name="ghes" id="ghes" value="">
+                    <input type="hidden" name="maCaChieu" id="maCaChieuInputModal" value="${maCaChieu}">
+</form>
+<!--End form ảo để chọn ghế  -->
+<!--Thông báo  -->
 
-
+        <!--End Thông báo  -->
 		<script
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 			integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -414,14 +433,27 @@ input {
 		        bookBtn.disabled = document.querySelectorAll(".all-seats input:checked").length === 0;
 		    });
 		});
-
+		let seats = document.querySelector(".all-seats");
+		let tickets = seats.querySelectorAll("input");
 		// Thêm sự kiện cho nút "Xác nhận đặt"
 		document.querySelector(".bookTicketBtn").addEventListener("click", () => {
 		    // Gọi hàm bookTicket() khi nút được nhấn
-		    bookTicket();
+		    const formPhong = document.querySelector('.chonGheForm');
+	        formPhong.action = "user/chonGhe.htm";
+	        let selectedSeats = [];
+	        tickets.forEach((ticket) => {
+	            if (ticket.checked) {
+	                selectedSeats.push(ticket.value);
+	            }
+	        });
+	        document.getElementById('ghes').value = selectedSeats.join(',');
+	        // Gửi form
+	      	formPhong.submit();
 
 		    // Hiển thị modal thông báo đặt vé thành công
 		    var myModal = new bootstrap.Modal(document.getElementById('successModal'));
 		    myModal.show();
 		});
 </script>
+</body>
+</html>

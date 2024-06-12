@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Table(name="HOADON")
 public class HoaDon {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="MAHOADON")
 	private int maHoaDon;
 	
@@ -34,6 +35,12 @@ public class HoaDon {
 	@ManyToOne
 	@JoinColumn(name="maVe")
     private Ve ve;
+	
+	@ManyToOne
+	@JoinColumn(name="maCaChieu")
+    private CaChieu caChieu;
+	
+	
 
     public HoaDon() {
     }
@@ -110,5 +117,12 @@ public class HoaDon {
 
     public void setVe(Ve ve) {
         this.ve = ve;
+    }
+    public CaChieu getCaChieu() {
+        return caChieu;
+    }
+
+    public void setCaChieu(CaChieu caChieu) {
+        this.caChieu = caChieu;
     }
 }

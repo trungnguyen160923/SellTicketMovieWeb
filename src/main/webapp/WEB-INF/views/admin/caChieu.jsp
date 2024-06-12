@@ -50,7 +50,11 @@
                 </ul>
             </div>
         </div>
-        <button class="btn btn-info" style="width: 150px; height: 50px; border-radius: 15px; color: aliceblue;">Đăng Xuất</button>
+        <form action="<c:url value='/logout.htm'/>" method="post">
+				<button type="submit" class="btn btn-info"
+					style="width: 150px; height: 50px; border-radius: 15px; color: aliceblue">Đăng
+					Xuất</button>
+			</form>
     </header>
     <div class="main">
         <!-- Form Section -->

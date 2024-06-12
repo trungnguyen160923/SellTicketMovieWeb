@@ -36,7 +36,7 @@ public class CaChieu {
     private String gioKetThuc;
 	
 	@OneToMany(mappedBy = "caChieu", fetch = FetchType.EAGER)
-	private Collection<Ve> ves;
+	private Collection<HoaDon> hoaDons;
 
     public CaChieu() {
     }
@@ -105,11 +105,11 @@ public class CaChieu {
         this.gioKetThuc = gioKetThuc;
     }
     
-    public Collection<Ve> getVes() {
-        return this.ves;
+    public Collection<HoaDon> getHoaDons() {
+        return this.hoaDons;
     }
 
-    public void setVes(Collection<Ve> ves) {
-        this.ves = ves;
+    public void setHoaDons(Collection<HoaDon> hoaDons) {
+        this.hoaDons = hoaDons;
     }
 }

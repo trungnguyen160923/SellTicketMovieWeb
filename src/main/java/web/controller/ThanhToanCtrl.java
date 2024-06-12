@@ -9,6 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.Session;
 import org.hibernate.Query;
 import web.model.HoaDon;
@@ -25,7 +26,7 @@ public class ThanhToanCtrl {
     @RequestMapping(value = "thanhToan", method = RequestMethod.GET)
     public String hienThiThanhToan(ModelMap model, HttpSession httpSession) {
         // Kiểm tra xem đã đăng nhập chưa
-        TaiKhoan taiKhoan = (TaiKhoan) httpSession.getAttribute("taiKhoan");
+        TaiKhoan taiKhoan = (TaiKhoan) httpSession.getAttribute("user");
         if (taiKhoan == null) {
             model.addAttribute("message", "Bạn phải đăng nhập để xem hóa đơn.");
             return "user/thanhToan";
@@ -47,6 +48,41 @@ public class ThanhToanCtrl {
 
         return "user/thanhToan";
     }
+    @RequestMapping(value = "thanhToan", method = RequestMethod.POST)
+    public String thanhToan(ModelMap model, HttpSession httpSession) {
+        Session session = factory.openSession();
+        Transaction tx = null;
+        TaiKhoan taiKhoan = (TaiKhoan) httpSession.getAttribute("user");
+        
+        try {
+            tx = session.beginTransaction();
+            
+            // Truy vấn các hóa đơn có trạng thái là false và thuộc về maTaiKhoan
+            String hql = "FROM HoaDon WHERE taiKhoan.maTaiKhoan = :maTaiKhoan AND trangThai = false";
+            Query query = session.createQuery(hql);
+            query.setParameter("maTaiKhoan", taiKhoan.getMaTaiKhoan());
+            
+            List<HoaDon> hoaDons = query.list();
+            
+            // Cập nhật trạng thái của từng hóa đơn
+            for (HoaDon hoaDon : hoaDons) {
+                hoaDon.setTrangThai(true);
+                session.update(hoaDon);
+            }
+            
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        
+        return "redirect:/user/thanhToan.htm";
+    }
+
 }
 
 

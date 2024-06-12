@@ -159,7 +159,6 @@ body {
 							<th>Tổng giá</th>
 							<th>Ngày mua</th>
 							<th>Trạng thái</th>
-							<th>Mã vé</th>
 							<th>Mã ghế</th>
 						</tr>
 					</thead>
@@ -170,9 +169,17 @@ body {
 								<td>${hoaDon.soLuong}</td>
 								<td>${hoaDon.tongGia}VND</td>
 								<td>${hoaDon.ngayMua}</td>
-								<td>${hoaDon.trangThai}</td>
-								<td>${hoaDon.ve.maVe}</td>
-								<td>${hoaDon.ve.ghe.maGhe}</td>
+								<td>
+									    <c:choose>
+									        <c:when test="${hoaDon.trangThai}">
+									            Đã Thanh Toán
+									        </c:when>
+									        <c:otherwise>
+									            Chưa Thanh Toán
+									        </c:otherwise>
+									    </c:choose>
+									</td>
+								<td>${hoaDon.ghe.hang}${hoaDon.ghe.cot}</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -232,15 +239,33 @@ body {
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+					<button type="submit" class="btn btn-primary" id="saveButton">Xác Nhận Thanh Toán</button>
 				</div>
 			</div>
 		</div>
 	</div>
-
+<form class="thanhToanForm" method="POST" action="user/thanhToan.htm" enctype="application/x-www-form-urlencoded">               
+                     <!-- Hidden input to store selected seat IDs -->
+                    <input type="hidden" name="HoaDons" id="hoaDons" value="">
+</form>
+<!--End form ảo để chọn ghế  -->
+        <c:if test="${not empty message}">
+                    <script>
+                        alert("${message}");
+                    </script>
+         		</c:if>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 		crossorigin="anonymous"></script>
+	<script>
+        document.getElementById('saveButton').addEventListener('click', function(event) {
+            event.preventDefault(); // Ngăn chặn việc gửi form mặc định
+
+            // Gửi form
+            document.querySelector('.thanhToanForm').submit();
+        });
+    </script>
 </body>
 </html>
 

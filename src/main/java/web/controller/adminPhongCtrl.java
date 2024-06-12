@@ -220,53 +220,58 @@ public class adminPhongCtrl {
 	    }
 		return "redirect:/admin/chiTietPhong.htm?maPhong="+maPhong;
 	}
-	// Cập nhật ghế
 	@RequestMapping("updateGhe")
-	public String updateGhe(@RequestParam("ghes") List<Integer> ghes
-			,@RequestParam("maPhong") Integer maPhong,
-			ModelMap model,
-			@RequestParam("maLoaiGhe") Integer maLoaiGhe,
-			@RequestParam("trangThai") Integer trangThai
-			) {
-		 Session session = factory.openSession();
-	        Transaction t = session.beginTransaction();
-	        try {
-	        	for (Integer maGhe : ghes) {
-	                Ghe ghe = (Ghe) session.get(Ghe.class, maGhe);
-	                if (ghe != null && ghe.getTrangThai() != 1) { // Check if the seat is not booked (trangThai != 1)
-	                    LoaiGhe loaiGhe = new LoaiGhe();
-	                    loaiGhe.setMaLoaiGhe(maLoaiGhe);
-	                    ghe.setLoaiGhe(loaiGhe);
-	                    ghe.setTrangThai(trangThai);
-	                    session.update(ghe);
-	                    t.commit();
-	    	            model.addAttribute("message", "Cập nhật ghế thành công!");
-	                }else {
-	                	model.addAttribute("message", "Không thể xóa ghế. Có ghế đã được đặt.");
-	                }
+	public String updateGhe(@RequestParam("ghes") List<Integer> ghes,
+	                        @RequestParam("maPhong") Integer maPhong,
+	                        ModelMap model,
+	                        @RequestParam("maLoaiGhe") Integer maLoaiGhe,
+	                        @RequestParam("trangThai") Integer trangThai) {
+	    Session session = factory.openSession();
+	    Transaction t = session.beginTransaction();
+	    boolean allSeatsUpdated = true;
+	    
+	    try {
+	        for (Integer maGhe : ghes) {
+	            Ghe ghe = (Ghe) session.get(Ghe.class, maGhe);
+	            if (ghe != null && ghe.getTrangThai() != 1) { // Check if the seat is not booked (trangThai != 1)
+	                LoaiGhe loaiGhe = new LoaiGhe();
+	                loaiGhe.setMaLoaiGhe(maLoaiGhe);
+	                ghe.setLoaiGhe(loaiGhe);
+	                ghe.setTrangThai(trangThai);
+	                session.update(ghe);
+	            } else {
+	                allSeatsUpdated = false;
+	                break;
 	            }
-	            
-	        } catch (Exception e) {
-	            t.rollback();
-	            model.addAttribute("message", "Cập nhật thất bại! Lỗi: " + e);
-	            e.printStackTrace();
-	        } finally {
-	            session.close();
 	        }
 
-	        return "redirect:/admin/chiTietPhong.htm?maPhong="+maPhong;
+	        if (allSeatsUpdated) {
+	            t.commit();
+	            model.addAttribute("message", "Cập nhật ghế thành công!");
+	        } else {
+	            t.rollback();
+	            model.addAttribute("message", "Không thể xóa ghế. Có ghế đã được đặt.");
+	        }
+	    } catch (Exception e) {
+	        t.rollback();
+	        model.addAttribute("message", "Cập nhật thất bại! Lỗi: " + e);
+	        e.printStackTrace();
+	    } finally {
+	        session.close();
+	    }
+
+	    return "redirect:/admin/chiTietPhong.htm?maPhong=" + maPhong;
 	}
 	// Thêm Ghế
 	@RequestMapping("addGhe")
 	public String addGhe(
-			@RequestParam("maPhong") Integer maPhong,
-			ModelMap model,
-			@RequestParam("maLoaiGhe") Integer maLoaiGhe,
-			@RequestParam("trangThai") Integer trangThai,
-			@RequestParam("hang") Integer soHang,
-			@RequestParam("cot") Integer soCot
-			) {
-		Session session = factory.openSession();
+	        @RequestParam("maPhong") Integer maPhong,
+	        ModelMap model,
+	        @RequestParam("maLoaiGhe") Integer maLoaiGhe,
+	        @RequestParam("trangThai") Integer trangThai,
+	        @RequestParam("hang") Integer soHang,
+	        @RequestParam("cot") Integer soCot) {
+	    Session session = factory.openSession();
 	    Transaction t = session.beginTransaction();
 	    try {
 	        for (int i = 0; i < soHang; i++) {
@@ -285,21 +290,21 @@ public class adminPhongCtrl {
 	                loaiGhe.setMaLoaiGhe(maLoaiGhe);
 	                ghe.setLoaiGhe(loaiGhe);
 
-					session.save(ghe);
+	                session.save(ghe);
 	            }
-	            
 	        }
-			t.commit();
-            model.addAttribute("message", "Thêm ghế thành công!");
+	        t.commit();
+	        model.addAttribute("message", "Thêm ghế thành công!");
 	    } catch (Exception e) {
 	        t.rollback();
 	        e.printStackTrace();
-            model.addAttribute("message", "Thêm ghế thất bại! Lỗi: " + e);
+	        model.addAttribute("message", "Thêm ghế thất bại! Lỗi: " + e);
 	    } finally {
 	        session.close();
 	    }
-		return "redirect:/admin/chiTietPhong.htm?maPhong="+maPhong;
+	    return "redirect:/admin/chiTietPhong.htm?maPhong=" + maPhong;
 	}
+
 	
 	// Thêm Loại Phòng
 	@RequestMapping("addLoaiPhong")
