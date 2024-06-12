@@ -94,7 +94,8 @@ body {
 							<p class="card-text">${cc.phim.moTa}</p>
 							<button href="#" class="btn btn-primary" data-bs-toggle="modal"
 								data-bs-target="#movie_${cc.phim.maPhim}">Xem Chi Tiết</button>
-							<button class="btn btn-primary" onclick="bookTicket(${cc.phim.maPhim})">Đặt Vé</button>
+							<button class="btn btn-primary"
+								onclick="bookTicket(${cc.phim.maPhim})">Đặt Vé</button>
 							<button class="btn btn-primary mt-2" data-bs-toggle="modal"
 								data-bs-target="#model_youtube_${cc.phim.maPhim}">Xem
 								trailer</button>
@@ -133,12 +134,14 @@ body {
 					</div>
 					<div class="modal-body">
 						<div class="embed-responsive embed-responsive-16by9">
-							<%-- <iframe id="cartoonVideo" class="embed-responsive-item" width="560" height="315" src="${p.phim.trailer}" allowfullscreen></iframe> --%>
+							<iframe id="cartoonVideo" class="embed-responsive-item"
+								width="560" height="315" src="${p.phim.trailer}" allowfullscreen></iframe>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
 	</c:forEach>
 	<!--End Model Youtube  -->
 	<!--Phần Model  -->

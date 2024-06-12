@@ -16,7 +16,7 @@ public class UserInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         TaiKhoan user = (TaiKhoan) session.getAttribute("user");
             if (user.getVaiTro().getMaVaiTro() != 3) {
-                response.sendRedirect(request.getContextPath() + "/admin/home.htm");
+                response.sendRedirect(request.getContextPath() + "/admin/index.htm");
                 return false;
             }
         return true;

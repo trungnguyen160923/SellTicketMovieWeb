@@ -400,7 +400,7 @@ body {
 					</div>
 					<div class="modal-body">
 						<div class="embed-responsive embed-responsive-16by9">
-							<%-- <iframe id="cartoonVideo" class="embed-responsive-item" width="560" height="315" src="${p.trailer}" allowfullscreen></iframe> --%>
+							 <iframe id="cartoonVideo" class="embed-responsive-item" width="560" height="315" src="${p.trailer}" allowfullscreen></iframe> 
 						</div>
 					</div>
 				</div>

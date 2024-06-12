@@ -155,7 +155,9 @@ body {
 					<thead>
 						<tr>
 							<th>Mã hóa đơn</th>
-							<th>Số lượng ghế</th>
+							<th>Tên Phim</th>
+							<th>Tên Phòng </th>
+							<th>Lịch Chiếu</th>
 							<th>Tổng giá</th>
 							<th>Ngày mua</th>
 							<th>Trạng thái</th>
@@ -166,7 +168,11 @@ body {
 						<c:forEach var="hoaDon" items="${danhSachHoaDon}">
 							<tr>
 								<td>${hoaDon.maHoaDon}</td>
-								<td>${hoaDon.soLuong}</td>
+								<td>${hoaDon.caChieu.phim.tenPhim}</td>
+								<td>${hoaDon.caChieu.phong.tenPhong}</td>
+								<td>
+									${hoaDon.caChieu.gioBatDau} > ${hoaDon.caChieu.gioKetThuc} <br>${hoaDon.caChieu.ngayChieu}
+								</td>
 								<td>${hoaDon.tongGia}VND</td>
 								<td>${hoaDon.ngayMua}</td>
 								<td>
