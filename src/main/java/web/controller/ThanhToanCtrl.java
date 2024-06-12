@@ -25,7 +25,7 @@ public class ThanhToanCtrl {
     @RequestMapping(value = "thanhToan", method = RequestMethod.GET)
     public String hienThiThanhToan(ModelMap model, HttpSession httpSession) {
         // Kiểm tra xem đã đăng nhập chưa
-        TaiKhoan taiKhoan = (TaiKhoan) httpSession.getAttribute("taiKhoan");
+        TaiKhoan taiKhoan = (TaiKhoan) httpSession.getAttribute("user");
         if (taiKhoan == null) {
             model.addAttribute("message", "Bạn phải đăng nhập để xem hóa đơn.");
             return "user/thanhToan";
