@@ -279,10 +279,6 @@ input {
 	box-shadow: none;
 	border-color: #007bff;
 }
-.seat-checked {
-    background: rgb(180, 180, 180); /* Màu xám cho ghế đã đặt */
-    outline: none;
-}
 </style>
 </head>
 <body>
@@ -361,7 +357,8 @@ input {
 						<div>
 							<form id="thanhToanForm" method="POST" action="thanhToan">
 								<button type="button" class="btn btn-primary btn_successModal bookTicketBtn"
-									data-bs-toggle="modal" data-bs-target="#successModal">Xác Nhận Đặt</button>
+									data-bs-toggle="modal" data-bs-target="#successModal">Xác
+									Nhận Đặt</button>
 							</form>
 						</div>
 					</div>
@@ -378,9 +375,9 @@ input {
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="successModalLabel">Đặt vé updateh
+						<h5 class="modal-title" id="successModalLabel">Đặt vé thành
 							công!</h5>
-						<button tupdate"button" class="btn-close" data-bs-dismiss="modal"
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
 							aria-label="Close"></button>
 					</div>
 					<div class="modal-body">Quá trình đặt vé đã được hoàn thành
@@ -419,14 +416,17 @@ input {
 			crossorigin="anonymous">
 </script>
 
+		<script>
+		// Thêm hàm updateSelectedSeatCount để cập nhật số ghế đã chọn
+		function updateSelectedSeatCount() {
+		    const selectedSeatsCount = document.querySelectorAll(".all-seats input:checked").length;
+		    document.querySelector(".count").textContent = selectedSeatsCount;
+		}
 
-        const bookBtn = document.querySelector(".bookTicketBtn");
-        bookBtn.disabled = selectedSeatsCount === 0;
-    }
-
-    document.querySelectorAll(".all-seats input").forEach(seat => {
-        seat.addEventListener("change", updateSelectedSeatCount);
-    });
+		// Thêm sự kiện onchange cho từng ghế để gọi hàm updateSelectedSeatCount khi có thay đổi
+		document.querySelectorAll(".all-seats input").forEach(seat => {
+		    seat.addEventListener("change", () => {
+		        updateSelectedSeatCount();
 
 		        // Thay đổi trạng thái của nút "Xác nhận đặt" dựa trên số ghế đã chọn
 		        const bookBtn = document.querySelector(".bookTicketBtn");
