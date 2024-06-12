@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -132,8 +133,8 @@ body {
 						<li class="nav-item"><a class="nav-link"
 							href="user/thanhToan.htm">Thanh toán</a></li>
 						<li class="nav-item"><a class="nav-link"
-								href="${pageContext.servletContext.contextPath}/user/infor.htm">Thông
-									tin cá nhân</a></li>
+							href="${pageContext.servletContext.contextPath}/user/infor.htm">Thông
+								tin cá nhân</a></li>
 					</ul>
 				</div>
 				<form action="<c:url value='/logout.htm'/>" method="post">
@@ -169,10 +170,18 @@ body {
 								<td>${hoaDon.maHoaDon}</td>
 								<td>${hoaDon.soLuong}</td>
 								<td>${hoaDon.tongGia}VND</td>
-								<td>${hoaDon.ngayMua}</td>
-								<td>${hoaDon.trangThai}</td>
+								<td><fmt:formatDate value="${hoaDon.ngayMua}"
+										pattern="dd-MM-yyyy" /></td>
+								<td><c:choose>
+										<c:when test="${hoaDon.trangThai == true}">
+                    Đã thanh toán
+                </c:when>
+										<c:otherwise>
+                    Chưa thanh toán
+                </c:otherwise>
+									</c:choose></td>
 								<td>${hoaDon.ve.maVe}</td>
-								<td>${hoaDon.ve.ghe.maGhe}</td>
+								<td>${hoaDon.ghe.maGhe}</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -222,16 +231,16 @@ body {
 						Nội dung: <strong>Thanh toán vé xem phim + Mã Hóa Đơn</strong>
 					</p>
 					<p>
-						Chú ý: <strong>Việc xác nhận thanh toán thường mất khoảng 30s và
-							có thể lâu hơn từ 3-5'.</strong>
+						Chú ý: <strong>Việc xác nhận thanh toán thường mất khoảng
+							30s và có thể lâu hơn từ 3-5'.</strong>
 					</p>
-					<p>
-						Ghi sai nội dung vui lòng liên hệ Zalo:0987654321 (A Thông) để được giải quyết kịp thời.
-					</p>
+					<p>Ghi sai nội dung vui lòng liên hệ Zalo:0987654321 (A Thông)
+						để được giải quyết kịp thời.</p>
 					</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Đóng</button>
 				</div>
 			</div>
 		</div>

@@ -279,6 +279,10 @@ input {
 	box-shadow: none;
 	border-color: #007bff;
 }
+.seat-checked {
+    background: rgb(180, 180, 180); /* Màu xám cho ghế đã đặt */
+    outline: none;
+}
 </style>
 </head>
 <body>
@@ -346,82 +350,67 @@ input {
 							<div class="count">0</div>
 						</div>
 						<div>
-							<form id="thanhToanForm" method="POST" action="thanhToan">
-								<button type="button" class="btn btn-primary btn_successModal"
-									data-bs-toggle="modal" data-bs-target="#successModal">Xác
+							<form id="xacnhan" method="POST" action="xacnhandat">
+								<button type="button" class="btn btn-primary bookTicketBtn"
+									disabled data-bs-toggle="modal" data-bs-target="#successModal">Xác
 									Nhận Đặt</button>
 							</form>
 						</div>
 					</div>
 
-				</div>
-			</div>
-		</div>
-
-
-		<!-- Modal -->
-		<div class="modal fade" id="successModal" tabindex="-1"
-			aria-labelledby="successModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="successModalLabel">Đặt vé thành
-							công!</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
+					<!-- Modal -->
+					<div class="modal fade" id="successModal" tabindex="-1"
+						aria-labelledby="successModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="successModalLabel">Đặt vé
+										thành công!</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">Quá trình đặt vé đã được hoàn
+									thành thành công!</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-bs-dismiss="modal">Đóng</button>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="modal-body">Quá trình đặt vé đã được hoàn thành
-						thành công!</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-bs-dismiss="modal">Đóng</button>
-					</div>
-				</div>
-			</div>
-		</div>
 
+					<script
+						src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+						integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+						crossorigin="anonymous"></script>
+					<script
+						src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+						integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+						crossorigin="anonymous"></script>
+					<script
+						src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+						integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+						crossorigin="anonymous"></script>
 
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-			integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-			crossorigin="anonymous">
-</script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-			integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-			crossorigin="anonymous">
-</script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-			integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-			crossorigin="anonymous">
-</script>
+					<script>
+    function updateSelectedSeatCount() {
+        const selectedSeatsCount = document.querySelectorAll(".all-seats input:checked").length;
+        document.querySelector(".count").textContent = selectedSeatsCount;
 
-		<script>
-		// Thêm hàm updateSelectedSeatCount để cập nhật số ghế đã chọn
-		function updateSelectedSeatCount() {
-		    const selectedSeatsCount = document.querySelectorAll(".all-seats input:checked").length;
-		    document.querySelector(".count").textContent = selectedSeatsCount;
-		}
+        const bookBtn = document.querySelector(".bookTicketBtn");
+        bookBtn.disabled = selectedSeatsCount === 0;
+    }
 
-		// Thêm sự kiện onchange cho từng ghế để gọi hàm updateSelectedSeatCount khi có thay đổi
-		document.querySelectorAll(".all-seats input").forEach(seat => {
-		    seat.addEventListener("change", () => {
-		        updateSelectedSeatCount();
+    document.querySelectorAll(".all-seats input").forEach(seat => {
+        seat.addEventListener("change", updateSelectedSeatCount);
+    });
 
-		        // Thay đổi trạng thái của nút "Xác nhận đặt" dựa trên số ghế đã chọn
-		        const bookBtn = document.querySelector(".bookTicketBtn");
-		        bookBtn.disabled = document.querySelectorAll(".all-seats input:checked").length === 0;
-		    });
-		});
+    document.querySelector(".bookTicketBtn").addEventListener("click", () => {
+        // Hiển thị modal thông báo đặt vé thành công
+        var myModal = new bootstrap.Modal(document.getElementById('successModal'));
+        myModal.show();
+    });
 
-		// Thêm sự kiện cho nút "Xác nhận đặt"
-		document.querySelector(".bookTicketBtn").addEventListener("click", () => {
-		    // Gọi hàm bookTicket() khi nút được nhấn
-		    bookTicket();
-
-		    // Hiển thị modal thông báo đặt vé thành công
-		    var myModal = new bootstrap.Modal(document.getElementById('successModal'));
-		    myModal.show();
-		});
+    // Khởi tạo trạng thái ban đầu của nút "Xác nhận đặt"
+    updateSelectedSeatCount();
 </script>
