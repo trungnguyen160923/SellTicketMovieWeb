@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Cinema Ticket</title>
+<title>Pengu Ticket</title>
 <style>
 body {
 	background-image: url("./assets/images/account/login.jpg");
@@ -87,7 +87,7 @@ h2 {
 				<div class="login-form">
 					<div class="main-div">
 						<div class="panel">
-							<h2>Cinema Ticket</h2>
+							<h2>Pengu Ticket</h2>
 						</div>
 						<form:form class="account-form"
 							action="${pageContext.request.contextPath}/check-forgot.htm"

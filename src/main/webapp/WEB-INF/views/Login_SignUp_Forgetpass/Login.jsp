@@ -111,14 +111,14 @@ p {
 	bottom: 0;
 }
 </style>
-<title>Cinema Ticket</title>
+<title>Pengu Ticket</title>
 <base href="${pageContext.servletContext.contextPath}/*">
 </head>
 <body id="login-form">
 	<div class="login-form">
 		<div class="main-div">
 			<div class="panel">
-				<h2>Cinema Ticket</h2>
+				<h2>Pengu Ticket</h2>
 			</div>
 			<form class="account-form"
 				action="${pageContext.request.contextPath}/check-login.htm"
