@@ -16,7 +16,6 @@
 
 	<!-- Cấu hình interceptor -->
 	<mvc:interceptors>
-
 		<mvc:interceptor>
 			<mvc:mapping path="/admin/**" />
 			<mvc:mapping path="/user/**" />
